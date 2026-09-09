@@ -1,0 +1,14 @@
+period_name,day_scope,start_time,end_time,applies_to_room_type,occupancy_pattern,baseline_occupancy_hint
+morning_open,ALL,07:30,08:00,ALL,"building opening, low early-arrival occupancy",0-3
+passing_time_theory,WEEKDAY,varies,varies,CLASSROOM,10 min gap already built into hourly theory grid; used for movement spikes in corridor,corridor spike
+passing_time_lab,WEEKDAY,varies,varies,UG_LAB,"~1 min buffer between consecutive lab periods, short corridor movement spike",corridor spike
+lunch_break,WEEKDAY,12:50,14:00,CLASSROOM|UG_LAB,"classrooms/labs empty, corridor & near-canteen movement spike","near 0 in rooms, high in corridor"
+wed_short_day,WED_ONLY,11:00,19:20,CLASSROOM,no theory scheduled after 11am on Wednesday,0
+evening_winddown,ALL,18:50,21:15,CLASSROOM|UG_LAB|CORRIDOR,"classes/labs ended for day, only cleaning/security staff",0-2
+night_slip_study,ALL,21:15,01:30,CLASSROOM|CORRIDOR,students permitted to stay back for self-study (night slip),5-15
+building_closed,ALL,01:30,07:30,ALL,"outside data collection window; building closed, standby power only",0
+research_lab_hours,WEEKDAY,09:00,18:00,RESEARCH_LAB,"grad/research students working flexibly, not slot-based",2-6
+research_lab_weekend,WEEKEND,10:00,16:00,RESEARCH_LAB,occasional weekend research activity,0-2
+staff_room_hours,WEEKDAY,08:00,18:00,STAFF_ROOM,"faculty/staff present through work day, dip during lunch",4-8
+toilet_activity,ALL,07:30,01:30,TOILET,sporadic short-duration occupancy correlated with nearby footfall,"0-2, brief"
+service_room_idle,ALL,00:00,23:59,ELECTRICAL_ROOM|STORE_ROOM,normally unoccupied; occasional maintenance visits,"0-1, brief"

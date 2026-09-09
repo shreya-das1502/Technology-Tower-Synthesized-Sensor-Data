@@ -1,0 +1,154 @@
+{
+  "description": "Occupancy-driven sensor value rules for the digital twin. occupancy_ratio = current_occupancy / room_capacity.",
+  "sensors": {
+    "Occupancy": {
+      "unit": "person_count",
+      "entry_ramp_minutes_before_start": 10,
+      "full_by_minutes_after_start": 15,
+      "exit_decay_minutes_after_end": 5,
+      "noise_pct": 5,
+      "notes": "During a scheduled session, occupancy ramps 0->capacity linearly starting 10 min before the official start and reaching full capacity 15 min after start (matches entry-window rule), holds until end, then decays to 0 over 5 min."
+    },
+    "Temperature": {
+      "unit": "celsius",
+      "unoccupied_room_behaviour": "drifts toward outdoor ambient (weather_baseline diurnal value), lagged/damped by ~0.3x due to building thermal mass",
+      "occupied_room_behaviour": "AC/HVAC assumed active; target band 24-26 C regardless of ambient, reached within 10 min of occupancy ramp-up",
+      "occupancy_heat_gain_c_per_person": 0.02,
+      "max_occupancy_heat_gain_c": 3.0,
+      "condition_offset_c": {
+        "sunny": 0.5,
+        "moderate": 0.0,
+        "humid": 0.3,
+        "rainy": -0.8
+      },
+      "noise_c": 0.3
+    },
+    "Humidity": {
+      "unit": "percent_RH",
+      "unoccupied_room_behaviour": "tracks outdoor ambient (weather_baseline diurnal value) minus 5% (indoor drier baseline)",
+      "occupancy_effect_pct_per_person": 0.1,
+      "max_occupancy_effect_pct": 8.0,
+      "condition_offset_pct": {
+        "sunny": -3,
+        "moderate": 0,
+        "humid": 6,
+        "rainy": 10
+      },
+      "noise_pct": 2
+    },
+    "AirQuality": {
+      "metric": "CO2_ppm_proxy",
+      "unit": "ppm",
+      "outdoor_baseline_ppm": 420,
+      "empty_room_baseline_ppm": 450,
+      "accumulation_ppm_per_person_per_10min": 15,
+      "max_ppm": 1400,
+      "ventilation_decay_pct_per_5min_when_unoccupied": 8,
+      "noise_ppm": 10
+    },
+    "Energy": {
+      "unit": "kW_instantaneous",
+      "standby_load_kw": {
+        "CLASSROOM": 0.2,
+        "UG_LAB": 0.6,
+        "RESEARCH_LAB": 0.4,
+        "CORRIDOR": 0.3,
+        "STAFF_ROOM": 0.15,
+        "TOILET": 0.05,
+        "ELECTRICAL_ROOM": 1.0,
+        "STORE_ROOM": 0.02
+      },
+      "active_load_kw_per_capacity_unit": {
+        "CLASSROOM": 0.03,
+        "UG_LAB": 0.08,
+        "RESEARCH_LAB": 0.15,
+        "CORRIDOR": 0.01,
+        "STAFF_ROOM": 0.05,
+        "TOILET": 0.02,
+        "ELECTRICAL_ROOM": 0.0,
+        "STORE_ROOM": 0.0
+      },
+      "notes": "active_load = active_load_kw_per_capacity_unit * current_occupancy, added on top of standby_load when occupied; UG_LAB and RESEARCH_LAB have higher per-person draw due to instruments/PCs/AC.",
+      "noise_pct": 5
+    },
+    "Light": {
+      "unit": "lux",
+      "closed_hours_lux": 0,
+      "security_night_lux": {
+        "CORRIDOR": 40,
+        "CLASSROOM": 5,
+        "default": 0
+      },
+      "occupied_lux": {
+        "CLASSROOM": 400,
+        "UG_LAB": 500,
+        "RESEARCH_LAB": 450,
+        "CORRIDOR": 150,
+        "STAFF_ROOM": 350,
+        "TOILET": 200,
+        "ELECTRICAL_ROOM": 100,
+        "STORE_ROOM": 100
+      },
+      "unoccupied_daytime_lux": {
+        "CORRIDOR": 120,
+        "default": 0
+      },
+      "noise_pct": 5
+    }
+  },
+  "room_type_occupancy_baseline": {
+    "note": "Used outside scheduled sessions (from break_schedule.csv) to generate background occupancy.",
+    "CLASSROOM": {
+      "day": "0 unless night_slip_study window (5-15)",
+      "night_slip": [
+        5,
+        15
+      ]
+    },
+    "CORRIDOR": {
+      "operational_hours": [
+        10,
+        40
+      ],
+      "passing_time_spike": [
+        40,
+        90
+      ],
+      "night_slip": [
+        5,
+        15
+      ]
+    },
+    "STAFF_ROOM": {
+      "work_hours_pct_of_capacity": [
+        0.4,
+        0.8
+      ],
+      "lunch_dip_pct_of_capacity": [
+        0.1,
+        0.2
+      ]
+    },
+    "TOILET": {
+      "random_short_spikes": [
+        0,
+        3
+      ]
+    },
+    "ELECTRICAL_ROOM": {
+      "idle": [
+        0,
+        1
+      ]
+    },
+    "STORE_ROOM": {
+      "idle": [
+        0,
+        1
+      ]
+    },
+    "RESEARCH_LAB": {
+      "see_timetable_flexible_block": true
+    }
+  }
+}
