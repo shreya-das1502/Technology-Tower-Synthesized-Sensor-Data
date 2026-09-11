@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Technology Tower Sensor Data API Backend
+
+Globals:
+  Function:
+    Timeout: 5
+    MemorySize: 128
+    Runtime: python3.10
+    Architectures:
+      - x86_64
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref SensorReadingsTable
+
+Resources:
+  SensorReadingsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: sensor_id
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: S
+      KeySchema:
+        - AttributeName: sensor_id
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+
+  IngestReadingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: ingest.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref SensorReadingsTable
+      Events:
+        IngestApi:
+          Type: Api
+          Properties:
+            Path: /readings
+            Method: post
+
+  QueryReadingsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: query.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref SensorReadingsTable
+      Events:
+        QueryApi:
+          Type: Api
+          Properties:
+            Path: /readings
+            Method: get
+
+Outputs:
+  ApiEndpoint:
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/readings"
