@@ -598,6 +598,26 @@
 
     </header>
 
+    <!-- AWS BACKEND DATA SOURCE TOGGLE BAR -->
+    <div class="glass-card p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="text-xs font-mono text-slate-400 tracking-wider uppercase">Data Source:</span>
+        <div class="flex items-center p-1 rounded-xl bg-slate-950/70 border border-white/10">
+          <button id="btn-mode-synth" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-500/20 text-sky-200 border border-sky-400/30 transition">Synthetic Twin</button>
+          <button id="btn-mode-api" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white transition flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>Live AWS API</span>
+          </button>
+        </div>
+      </div>
+      <div id="api-config-bar" class="hidden flex flex-wrap items-center gap-2 flex-1 min-w-[280px]">
+        <span class="text-sky-300 font-mono text-xs font-bold">Endpoint:</span>
+        <input type="text" id="api-endpoint-url" value="https://qn96k2sn8l.execute-api.us-east-1.amazonaws.com/Prod/readings" class="flex-1 min-w-[200px] max-w-lg bg-black/40 border border-white/15 rounded-lg px-3 py-1.5 text-white font-mono text-xs focus:border-sky-400 outline-none" />
+        <button id="btn-ping-api" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/30 font-mono text-xs font-bold transition">Test Connection</button>
+        <span id="api-status-tag" class="text-[11px] font-mono text-slate-400">Status: Idle</span>
+      </div>
+    </div>
+
     <!-- 2. CAMPUS MOMENT KEY TIMINGS DECK + PLAY / PAUSE + SPEED ENGINE -->
     <div class="glass-card p-3.5 flex flex-col xl:flex-row items-center justify-between gap-3">
       
@@ -1246,6 +1266,54 @@
     let currentWorkflowStage = 1;
     let isFullDeckView = false;
 
+    // AWS API Integration State
+    let engineMode = 'synth'; // 'synth' or 'api'
+    let apiEndpointUrl = 'https://qn96k2sn8l.execute-api.us-east-1.amazonaws.com/Prod/readings';
+    let apiCache = {}; // Cached live data keyed by room sensor_id
+    let apiPollingInterval = null;
+
+    // Fetch live readings from the AWS API for a given room
+    async function fetchLiveReadings(roomId) {
+      const sensorId = `OCC-${roomId.replace('TT-', '')}`;
+      try {
+        const res = await fetch(`${apiEndpointUrl}?sensor_id=${sensorId}`, { method: 'GET' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const items = await res.json();
+        if (items && items.length > 0) {
+          apiCache[roomId] = items[items.length - 1]; // most recent reading
+        }
+        return items;
+      } catch (err) {
+        console.warn(`API fetch failed for ${sensorId}:`, err.message);
+        return null;
+      }
+    }
+
+    // Fetch all rooms in parallel for live mode
+    async function fetchAllRoomsLive() {
+      const statusTag = document.getElementById('api-status-tag');
+      if (statusTag) statusTag.textContent = 'Status: Polling...';
+      const promises = ROOMS.slice(0, 10).map(r => fetchLiveReadings(r.id)); // batch first 10
+      await Promise.allSettled(promises);
+      if (statusTag) statusTag.textContent = `Status: Live · ${Object.keys(apiCache).length} sensors cached`;
+    }
+
+    // Convert an API DynamoDB item to the same shape as synthesizeRoomTelemetry output
+    function apiItemToTelemetry(item, room) {
+      return {
+        room_id: room.id,
+        Occupancy: parseInt(item.occupancy || item.Occupancy || 0),
+        Temperature_C: parseFloat(item.temperature_c || item.Temperature_C || 24.0),
+        AirQuality_ppm: parseInt(item.co2_ppm || item.AirQuality_ppm || 450),
+        Energy_kW: parseFloat(item.power_kw || item.Energy_kW || 0.2),
+        Humidity_pct: parseFloat(item.humidity_pct || item.Humidity_pct || 55.0),
+        Light_lux: parseInt(item.light_lux || item.Light_lux || 400),
+        outdoorTemp: parseFloat(item.outdoor_temp || 32.4),
+        outdoorHum: parseInt(item.outdoor_humidity || 58),
+        condition: item.weather_condition || 'sunny'
+      };
+    }
+
     // Buffer for rolling history (24 ticks = 2 hours)
     const rollingHistory = {};
     ROOMS.forEach(r => { rollingHistory[r.id] = []; });
@@ -1697,7 +1765,12 @@
       const alerts = [];
 
       ROOMS.forEach(room => {
-        const data = synthesizeRoomTelemetry(room, currentStep, currentDayIndex);
+        let data;
+        if (engineMode === 'api' && apiCache[room.id]) {
+          data = apiItemToTelemetry(apiCache[room.id], room);
+        } else {
+          data = synthesizeRoomTelemetry(room, currentStep, currentDayIndex);
+        }
 
         if (!rollingHistory[room.id]) rollingHistory[room.id] = [];
         rollingHistory[room.id].push(data);
@@ -2075,16 +2148,32 @@
     }
 
     // Modal API Inspector Tool
-    function openApiInspector() {
+    async function openApiInspector() {
+      const room = ROOMS.find(r => r.id === selectedRoomId) || ROOMS[0];
+      const sensorId = `OCC-${selectedRoomId.replace('TT-', '')}`;
+      document.getElementById('api-modal-sensor-id').textContent = sensorId;
+
+      // If in API mode, do a real fetch and show the raw response
+      if (engineMode === 'api') {
+        document.getElementById('api-modal-json').textContent = 'Fetching from AWS DynamoDB...';
+        document.getElementById('modal-api-inspector').classList.remove('hidden');
+        try {
+          const res = await fetch(`${apiEndpointUrl}?sensor_id=${sensorId}`, { method: 'GET' });
+          const data = await res.json();
+          document.getElementById('api-modal-json').textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+          document.getElementById('api-modal-json').textContent = JSON.stringify({ error: err.message, hint: 'Check that the API endpoint URL is correct and the backend is deployed.' }, null, 2);
+        }
+        return;
+      }
+
+      // Synthetic mode: show mock payload
       const history = rollingHistory[selectedRoomId];
       const latest = (history && history.slice(-1)[0]) || {};
-      const room = ROOMS.find(r => r.id === selectedRoomId) || ROOMS[0];
-
-      document.getElementById('api-modal-sensor-id').textContent = `OCC-${selectedRoomId.replace('TT-', '')}`;
 
       const payload = {
         status: "success",
-        sensor_id: `OCC-${selectedRoomId.replace('TT-', '')}`,
+        sensor_id: sensorId,
         room_id: selectedRoomId,
         room_name: room.name,
         room_type: room.type,
@@ -2103,7 +2192,7 @@
           ghost_energy_flag: (latest.Occupancy === 0 && (latest.Energy_kW || 0) > 2.0),
           hvac_comfort_drift: (latest.Temperature_C || 24) > 27.5
         },
-        dynamodb_table: "TechnologyTower_Sensors_Dev"
+        dynamodb_table: "SensorReadingsTable"
       };
 
       document.getElementById('api-modal-json').textContent = JSON.stringify(payload, null, 2);
@@ -2118,6 +2207,53 @@
     function initApp() {
       buildFloorPlanSVG();
       preseedHistory();
+
+      // Data source toggle: Synthetic vs Live API
+      const btnSynth = document.getElementById('btn-mode-synth');
+      const btnApi = document.getElementById('btn-mode-api');
+      const apiBar = document.getElementById('api-config-bar');
+      const btnPing = document.getElementById('btn-ping-api');
+
+      btnSynth.addEventListener('click', () => {
+        engineMode = 'synth';
+        btnSynth.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-500/20 text-sky-200 border border-sky-400/30 transition';
+        btnApi.className = 'px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white transition flex items-center gap-1.5';
+        apiBar.classList.add('hidden');
+        if (apiPollingInterval) { clearInterval(apiPollingInterval); apiPollingInterval = null; }
+        document.getElementById('api-status-tag').textContent = 'Status: Idle';
+      });
+
+      btnApi.addEventListener('click', () => {
+        engineMode = 'api';
+        btnApi.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 transition flex items-center gap-1.5';
+        btnSynth.className = 'px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white transition';
+        apiBar.classList.remove('hidden');
+        apiEndpointUrl = document.getElementById('api-endpoint-url').value;
+        fetchAllRoomsLive();
+        // Poll every 10 seconds
+        if (apiPollingInterval) clearInterval(apiPollingInterval);
+        apiPollingInterval = setInterval(() => {
+          apiEndpointUrl = document.getElementById('api-endpoint-url').value;
+          fetchAllRoomsLive();
+        }, 10000);
+      });
+
+      btnPing.addEventListener('click', async () => {
+        apiEndpointUrl = document.getElementById('api-endpoint-url').value;
+        const statusTag = document.getElementById('api-status-tag');
+        statusTag.textContent = 'Status: Testing...';
+        try {
+          const res = await fetch(`${apiEndpointUrl}?sensor_id=OCC-201`, { method: 'GET' });
+          const data = await res.json();
+          if (res.ok) {
+            statusTag.textContent = `Status: ✅ Connected · ${Array.isArray(data) ? data.length : 0} readings found`;
+          } else {
+            statusTag.textContent = `Status: ⚠️ ${res.status} — ${data.error || 'Unknown error'}`;
+          }
+        } catch (err) {
+          statusTag.textContent = `Status: ❌ Failed — ${err.message}`;
+        }
+      });
       selectRoom('TT-201');
       resizeSky();
       resizeAnalyticalChart();
