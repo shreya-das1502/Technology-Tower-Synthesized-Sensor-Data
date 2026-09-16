@@ -1,6 +1,7 @@
 import json
 import boto3
 import os
+import decimal
 
 dynamodb = boto3.resource('dynamodb')
 table_name = os.environ.get('TABLE_NAME', 'SensorReadingsTable')
@@ -12,15 +13,21 @@ def lambda_handler(event, context):
         if not event.get('body'):
             return {
                 'statusCode': 400, 
+                'headers': {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 'body': json.dumps({'error': 'Missing request body'})
             }
             
-        body = json.loads(event['body'])
+        body = json.loads(event['body'], parse_float=decimal.Decimal)
         
         # Validate required fields
         if 'sensor_id' not in body or 'timestamp' not in body:
             return {
                 'statusCode': 400, 
+                'headers': {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 'body': json.dumps({'error': 'Missing required fields: sensor_id and timestamp'})
             }
         
@@ -39,5 +46,8 @@ def lambda_handler(event, context):
         print(f"Error: {str(e)}")
         return {
             'statusCode': 500, 
+            'headers': {
+                'Access-Control-Allow-Origin': '*'
+            },
             'body': json.dumps({'error': 'Internal server error'})
         }

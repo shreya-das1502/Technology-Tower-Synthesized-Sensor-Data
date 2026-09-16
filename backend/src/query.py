@@ -15,6 +15,9 @@ def lambda_handler(event, context):
         if not sensor_id:
             return {
                 'statusCode': 400, 
+                'headers': {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 'body': json.dumps({'error': 'Missing query parameter: sensor_id'})
             }
         
@@ -23,17 +26,26 @@ def lambda_handler(event, context):
             KeyConditionExpression=Key('sensor_id').eq(sensor_id)
         )
         
+        import decimal
+        def decimal_default(obj):
+            if isinstance(obj, decimal.Decimal):
+                return float(obj)
+            raise TypeError
+        
         return {
             'statusCode': 200,
             'headers': {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*' # Required for Person 4's Dashboard
             },
-            'body': json.dumps(response.get('Items', []))
+            'body': json.dumps(response.get('Items', []), default=decimal_default)
         }
     except Exception as e:
         print(f"Error: {str(e)}")
         return {
             'statusCode': 500, 
+            'headers': {
+                'Access-Control-Allow-Origin': '*'
+            },
             'body': json.dumps({'error': 'Internal server error'})
         }

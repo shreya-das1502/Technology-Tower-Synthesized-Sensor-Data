@@ -1,0 +1,47 @@
+room_id,room_name,room_type,area_sqft,area_sqm,department,capacity,sensors_present
+201,CLASSROOM,CLASSROOM,736.8,68.45,SELECT,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+202,INDUSTRIAL AUTOMATION LAB,UG_LAB,697.94,64.84,SELECT,35,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+203,NETWORKING LAB,UG_LAB,725.82,67.43,SAS,35,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+204,CLASSROOM,CLASSROOM,690.83,64.18,SELECT,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+205,CLASSROOM,CLASSROOM,726.03,67.45,SENSE,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+206,CLASSROOM,CLASSROOM,704.83,65.48,SENSE,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+207,CLASSROOM,CLASSROOM,697.94,64.84,SENSE,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+208,CLASSROOM,CLASSROOM,726.03,67.45,SENSE,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+209,MATERIAL CHEMISTRY LAB,UG_LAB,523.78,48.66,SAS,35,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+210,NATURAL PRODUCT RESEARCH LAB,RESEARCH_LAB,778.56,72.33,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+211,MTECH PHARMA CHEM & ELECTROCHEM & XRD LAB,RESEARCH_LAB,789.54,73.35,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+212,STAFF ROOM,STAFF_ROOM,129.17,12.0,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+213,ORGANIC POLYMERS RESEARCH LAB,RESEARCH_LAB,686.1,63.74,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+214,MSc ORGANIC CHEMISTRY & RESEARCH LAB,RESEARCH_LAB,683.84,63.53,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+215-216,CENTRE FOR ORGANIC & MEDICINAL LAB,RESEARCH_LAB,682.98,63.45,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+217,ANALYTICAL CHEMISTRY RESEARCH LAB,RESEARCH_LAB,1057.56,98.25,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+218,STAFF ROOM,STAFF_ROOM,129.17,12.0,NONE,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+219,GENTS TOILET,TOILET,640.46,59.5,NONE,15,Occupancy|AirQuality|Energy|Light
+220,ELECTRICAL ROOM,ELECTRICAL_ROOM,86.11,8.0,NONE,3,Temperature|Energy|Occupancy
+221-222,MSc ORGANIC & INORGANIC CHEM LAB,RESEARCH_LAB,1762.61,163.75,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+223,STAFF ROOM,STAFF_ROOM,129.17,12.0,NONE,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+223A,STORE ROOM,STORE_ROOM,86.11,8.0,NONE,3,Occupancy|Energy|Light
+224,ORGANIC & MEDICAL CHEM RESEARCH LAB,RESEARCH_LAB,607.09,56.4,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+225,STAFF ROOM,STAFF_ROOM,129.17,12.0,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+226,STAFF ROOM,STAFF_ROOM,129.17,12.0,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+227,STAFF ROOM,STAFF_ROOM,129.17,12.0,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+228,STAFF ROOM,STAFF_ROOM,129.17,12.0,SAS,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+229,STAFF TOILET,TOILET,129.17,12.0,NONE,15,Occupancy|AirQuality|Energy|Light
+230,LADIES TOILET,TOILET,619.9,57.59,NONE,15,Occupancy|AirQuality|Energy|Light
+231,ADVANCED DSP LAB,UG_LAB,1006.97,93.55,SENSE,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+232,DSP LAB,UG_LAB,1781.23,165.48,SELECT,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+233-234,VOC GALLERY II,CORRIDOR,3379.9,314.0,NONE,150,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+235,SOLAR ENERGY RESEARCH CELL,RESEARCH_LAB,394.15,36.62,SELECT,10,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+236,ADVANCED DRIVES LAB,UG_LAB,1285.76,119.45,SELECT,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+237,FPGA SOPC LAB,UG_LAB,1385.43,128.71,SENSE,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+237A,ASIC LAB,UG_LAB,1746.14,162.22,SENSE,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+238,IC DESIGN LAB,UG_LAB,1756.04,163.14,SENSE,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+239,STAFF ROOM,STAFF_ROOM,538.2,50.0,MIXED,20,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+240,STAFF ROOM,STAFF_ROOM,538.2,50.0,MIXED,20,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+241,STAFF ROOM,STAFF_ROOM,538.2,50.0,MIXED,20,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+242,STAFF ROOM,STAFF_ROOM,538.2,50.0,MIXED,20,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+243,STAFF ROOM,STAFF_ROOM,538.2,50.0,MIXED,20,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+244,STAFF ROOM,STAFF_ROOM,538.2,50.0,MIXED,20,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+245,STAFF TOILET,TOILET,172.22,16.0,NONE,15,Occupancy|AirQuality|Energy|Light
+246,ANALOG SYSTEM DESIGN LAB,UG_LAB,1756.36,163.17,SENSE,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light
+247,DIGITAL SIMULATION LAB,UG_LAB,1862.73,173.05,SELECT,70,Occupancy|Temperature|Humidity|AirQuality|Energy|Light

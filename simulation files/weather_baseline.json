@@ -1,0 +1,122 @@
+{
+  "location": "Vellore, Tamil Nadu, India",
+  "week_start": "2026-09-14",
+  "notes": "Synthetic seasonal baseline for a representative September week; conditions cycle through sun/moderate/humid/rainy as requested.",
+  "daily": [
+    {
+      "date": "2026-09-14",
+      "day": "Monday",
+      "condition": "sunny",
+      "temp_min_c": 24,
+      "temp_max_c": 34,
+      "humidity_min_pct": 50,
+      "humidity_max_pct": 65
+    },
+    {
+      "date": "2026-09-15",
+      "day": "Tuesday",
+      "condition": "moderate",
+      "temp_min_c": 23,
+      "temp_max_c": 31,
+      "humidity_min_pct": 55,
+      "humidity_max_pct": 70
+    },
+    {
+      "date": "2026-09-16",
+      "day": "Wednesday",
+      "condition": "humid",
+      "temp_min_c": 25,
+      "temp_max_c": 33,
+      "humidity_min_pct": 70,
+      "humidity_max_pct": 88
+    },
+    {
+      "date": "2026-09-17",
+      "day": "Thursday",
+      "condition": "rainy",
+      "temp_min_c": 22,
+      "temp_max_c": 28,
+      "humidity_min_pct": 80,
+      "humidity_max_pct": 95
+    },
+    {
+      "date": "2026-09-18",
+      "day": "Friday",
+      "condition": "sunny",
+      "temp_min_c": 24,
+      "temp_max_c": 33,
+      "humidity_min_pct": 50,
+      "humidity_max_pct": 65
+    },
+    {
+      "date": "2026-09-19",
+      "day": "Saturday",
+      "condition": "moderate",
+      "temp_min_c": 23,
+      "temp_max_c": 30,
+      "humidity_min_pct": 55,
+      "humidity_max_pct": 72
+    },
+    {
+      "date": "2026-09-20",
+      "day": "Sunday",
+      "condition": "humid",
+      "temp_min_c": 24,
+      "temp_max_c": 32,
+      "humidity_min_pct": 68,
+      "humidity_max_pct": 86
+    }
+  ],
+  "diurnal_temp_fraction_by_hour": {
+    "0": 0.15,
+    "1": 0.1,
+    "2": 0.07,
+    "3": 0.05,
+    "4": 0.03,
+    "5": 0.0,
+    "6": 0.05,
+    "7": 0.15,
+    "8": 0.3,
+    "9": 0.45,
+    "10": 0.6,
+    "11": 0.75,
+    "12": 0.88,
+    "13": 0.97,
+    "14": 1.0,
+    "15": 0.97,
+    "16": 0.88,
+    "17": 0.75,
+    "18": 0.6,
+    "19": 0.45,
+    "20": 0.35,
+    "21": 0.28,
+    "22": 0.22,
+    "23": 0.18
+  },
+  "diurnal_humidity_fraction_by_hour": {
+    "0": 0.85,
+    "1": 0.9,
+    "2": 0.93,
+    "3": 0.95,
+    "4": 0.97,
+    "5": 1.0,
+    "6": 0.95,
+    "7": 0.85,
+    "8": 0.7,
+    "9": 0.55,
+    "10": 0.4,
+    "11": 0.25,
+    "12": 0.12,
+    "13": 0.03,
+    "14": 0.0,
+    "15": 0.03,
+    "16": 0.12,
+    "17": 0.25,
+    "18": 0.4,
+    "19": 0.55,
+    "20": 0.65,
+    "21": 0.72,
+    "22": 0.78,
+    "23": 0.82
+  }
+}
