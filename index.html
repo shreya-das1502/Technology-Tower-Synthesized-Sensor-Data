@@ -360,84 +360,338 @@
       </div>
 
       <!-- Center / Right: Architectural 3D/Isometric Building Centerpiece + Floating Callout Badges -->
-      <div class="relative flex-1 w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center">
+      <!-- Center / Right: Architectural Building Centerpiece (VIT Technology Tower Stepped Architecture) + Floating Callout Badges -->
+      <div class="relative flex-1 w-full max-w-xl lg:max-w-2xl min-h-[420px] flex items-center justify-center">
         
         <!-- Ambient Radial Aura & Pulse Rings -->
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div class="w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-sky-500/15 filter blur-3xl"></div>
-          <div class="radar-ring absolute w-[360px] h-[360px] rounded-full border border-sky-400/20"></div>
-          <div class="radar-ring absolute w-[460px] h-[460px] rounded-full border border-sky-400/10" style="animation-delay: 1.5s;"></div>
+          <div class="w-96 h-96 rounded-full bg-sky-500/15 filter blur-3xl"></div>
+          <div class="radar-ring absolute w-[420px] h-[420px] rounded-full border border-sky-400/20"></div>
+          <div class="radar-ring absolute w-[520px] h-[520px] rounded-full border border-sky-400/10" style="animation-delay: 1.5s;"></div>
         </div>
 
-        <!-- Architectural SVG of VIT Technology Tower -->
-        <div class="relative z-10 w-64 sm:w-72 h-[380px] sm:h-[420px] transition-transform duration-500 hover:scale-[1.02]">
-          <svg viewBox="0 0 260 420" class="w-full h-full drop-shadow-[0_20px_35px_rgba(0,0,0,0.8)]">
+        <!-- Architectural SVG of the Real VIT Technology Tower (Stepped Terraced Facade) -->
+        <div class="relative z-10 w-full max-w-[560px] h-[350px] sm:h-[380px] transition-transform duration-500 hover:scale-[1.01] flex items-center justify-center">
+          <svg viewBox="0 0 640 375" class="w-full h-full drop-shadow-[0_20px_45px_rgba(0,0,0,0.85)]" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="heroTowerGlass" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.35"/>
-                <stop offset="50%" stop-color="#0284C7" stop-opacity="0.20"/>
-                <stop offset="100%" stop-color="#0C1E38" stop-opacity="0.85"/>
+              <!-- Facade Gradients matching Real TT -->
+              <linearGradient id="ttFacadeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#1E2B45" stop-opacity="0.95"/>
+                <stop offset="50%" stop-color="#121D30" stop-opacity="0.98"/>
+                <stop offset="100%" stop-color="#080F1D" stop-opacity="1.0"/>
               </linearGradient>
 
-              <linearGradient id="floor2ActiveGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.8"/>
-                <stop offset="50%" stop-color="#0284C7" stop-opacity="0.95"/>
-                <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.8"/>
+              <linearGradient id="ttFacadeHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#33466B"/>
+                <stop offset="100%" stop-color="#19253D"/>
               </linearGradient>
+
+              <!-- Central Glass Atrium -->
+              <linearGradient id="ttAtriumGlass" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0F172A"/>
+                <stop offset="25%" stop-color="#0284C7" stop-opacity="0.55"/>
+                <stop offset="50%" stop-color="#38BDF8" stop-opacity="0.85"/>
+                <stop offset="75%" stop-color="#0284C7" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#0F172A"/>
+              </linearGradient>
+
+              <!-- Active Floor 2 Neon Radiance -->
+              <linearGradient id="ttFloor2Glow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0369A1" stop-opacity="0.85"/>
+                <stop offset="20%" stop-color="#0284C7" stop-opacity="0.95"/>
+                <stop offset="50%" stop-color="#38BDF8" stop-opacity="1.0"/>
+                <stop offset="80%" stop-color="#0284C7" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#0369A1" stop-opacity="0.85"/>
+              </linearGradient>
+
+              <filter id="ttNeonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="6" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
             </defs>
 
             <!-- Ground Platform / VIT Courtyard -->
-            <ellipse cx="130" cy="395" rx="115" ry="16" fill="rgba(14, 165, 233, 0.12)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.2" />
-            
-            <!-- Campus Trees / Greenery -->
-            <circle cx="45" cy="385" r="14" fill="#065F46" opacity="0.75" />
-            <circle cx="65" cy="388" r="11" fill="#047857" opacity="0.85" />
-            <circle cx="195" cy="388" r="11" fill="#047857" opacity="0.85" />
-            <circle cx="215" cy="385" r="14" fill="#065F46" opacity="0.75" />
+            <ellipse cx="320" cy="340" rx="295" ry="22" fill="rgba(14, 165, 233, 0.08)" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2" />
+            <ellipse cx="320" cy="340" rx="250" ry="14" fill="none" stroke="rgba(56, 189, 248, 0.15)" stroke-width="1" stroke-dasharray="6 6" />
 
-            <!-- Main Building Shaft -->
-            <rect x="60" y="70" width="140" height="315" rx="14" fill="url(#heroTowerGlass)" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.8" />
+            <!-- Courtyard Greenery -->
+            <circle cx="48" cy="332" r="14" fill="#064E3B" opacity="0.85" />
+            <circle cx="68" cy="336" r="11" fill="#047857" opacity="0.90" />
+            <circle cx="572" cy="336" r="11" fill="#047857" opacity="0.90" />
+            <circle cx="592" cy="332" r="14" fill="#064E3B" opacity="0.85" />
 
-            <!-- West Wing -->
-            <path d="M60 160 L30 180 L30 380 L60 380 Z" fill="rgba(2, 132, 199, 0.18)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.2" />
-            
-            <!-- East Wing -->
-            <path d="M200 160 L230 180 L230 380 L200 380 Z" fill="rgba(2, 132, 199, 0.18)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.2" />
+            <!-- Rooftop Towers (Penthouses on Left and Right) -->
+            <!-- Left Penthouse / Utility Tower -->
+            <g id="tt-left-rooftop-tower">
+              <rect x="142" y="66" width="36" height="34" rx="2" fill="url(#ttFacadeHighlight)" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.2"/>
+              <rect x="149" y="72" width="7" height="8" rx="1" fill="#0A1424" stroke="rgba(56, 189, 248, 0.3)" stroke-width="0.8"/>
+              <rect x="162" y="72" width="7" height="8" rx="1" fill="#0A1424" stroke="rgba(56, 189, 248, 0.3)" stroke-width="0.8"/>
+              <line x1="160" y1="66" x2="160" y2="48" stroke="#38BDF8" stroke-width="1.5"/>
+              <circle cx="160" cy="46" r="2.5" fill="#38BDF8"/>
+            </g>
 
-            <!-- Floor Slabs (Simulated 12 Floors) -->
-            <line x1="60" y1="95" x2="200" y2="95" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
-            <line x1="60" y1="120" x2="200" y2="120" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
-            <line x1="60" y1="145" x2="200" y2="145" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
-            <line x1="60" y1="170" x2="200" y2="170" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
-            <line x1="60" y1="195" x2="200" y2="195" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
-            <line x1="60" y1="220" x2="200" y2="220" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
-            <line x1="60" y1="245" x2="200" y2="245" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
-            <line x1="60" y1="270" x2="200" y2="270" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
-            <line x1="60" y1="295" x2="200" y2="295" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
-            <line x1="60" y1="320" x2="200" y2="320" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
+            <!-- Right Penthouse / Utility Tower -->
+            <g id="tt-right-rooftop-tower">
+              <rect x="462" y="66" width="36" height="34" rx="2" fill="url(#ttFacadeHighlight)" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.2"/>
+              <rect x="469" y="72" width="7" height="8" rx="1" fill="#0A1424" stroke="rgba(56, 189, 248, 0.3)" stroke-width="0.8"/>
+              <rect x="482" y="72" width="7" height="8" rx="1" fill="#0A1424" stroke="rgba(56, 189, 248, 0.3)" stroke-width="0.8"/>
+              <line x1="480" y1="66" x2="480" y2="48" stroke="#38BDF8" stroke-width="1.5"/>
+              <circle cx="480" cy="46" r="2.5" fill="#38BDF8"/>
+            </g>
 
-            <!-- Highlighted Floor 2 Slab -->
-            <rect x="58" y="342" width="144" height="25" rx="4" fill="url(#floor2ActiveGlow)" stroke="#FFFFFF" stroke-width="1.8" filter="drop-shadow(0 0 16px rgba(56, 189, 248, 0.95))" />
-            <text x="130" y="358" text-anchor="middle" fill="#FFFFFF" font-size="10" font-family="'IBM Plex Mono', monospace" font-weight="700" letter-spacing="1">
-              FLOOR 02 · ACTIVE
-            </text>
+            <!-- MAIN BUILDING BACKDROP: Stepped Terraces (Floors 7 through 1) -->
+            <!-- Level 7: x=195..445, y=100..126 -->
+            <rect x="195" y="100" width="250" height="26" rx="2" fill="url(#ttFacadeGrad)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+            <line x1="195" y1="100" x2="445" y2="100" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1"/>
 
-            <line x1="60" y1="372" x2="200" y2="372" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
+            <!-- Level 6: x=165..475, y=126..152 -->
+            <rect x="165" y="126" width="310" height="26" rx="2" fill="url(#ttFacadeGrad)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+            <!-- Terrace Balustrade L6 -->
+            <line x1="165" y1="126" x2="195" y2="126" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <line x1="445" y1="126" x2="475" y2="126" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2"/>
 
-            <!-- Vertical Glass Mullions -->
-            <line x1="95" y1="70" x2="95" y2="385" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
-            <line x1="130" y1="70" x2="130" y2="385" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
-            <line x1="165" y1="70" x2="165" y2="385" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+            <!-- Level 5: x=135..505, y=152..178 -->
+            <rect x="135" y="152" width="370" height="26" rx="2" fill="url(#ttFacadeGrad)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+            <!-- Terrace Balustrade L5 -->
+            <line x1="135" y1="152" x2="165" y2="152" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <line x1="475" y1="152" x2="505" y2="152" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2"/>
 
-            <!-- Spire Array -->
-            <line x1="130" y1="70" x2="130" y2="28" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" />
-            <circle cx="130" cy="26" r="3.5" fill="#38BDF8" />
-            <circle cx="130" cy="26" r="8" fill="none" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1" />
+            <!-- Level 4: x=105..535, y=178..204 -->
+            <rect x="105" y="178" width="430" height="26" rx="2" fill="url(#ttFacadeGrad)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+            <!-- Terrace Balustrade L4 -->
+            <line x1="105" y1="178" x2="135" y2="178" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <line x1="505" y1="178" x2="535" y2="178" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2"/>
+
+            <!-- Level 3: x=75..565, y=204..232 -->
+            <rect x="75" y="204" width="490" height="28" rx="2" fill="url(#ttFacadeGrad)" stroke="rgba(56, 189, 248, 0.35)" stroke-width="1"/>
+            <!-- Terrace Balustrade L3 -->
+            <line x1="75" y1="204" x2="105" y2="204" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <line x1="535" y1="204" x2="565" y2="204" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2"/>
+
+            <!-- Level 1 (Ground Floor Base): x=32..608, y=270..326 -->
+            <rect x="32" y="270" width="576" height="56" rx="4" fill="url(#ttFacadeGrad)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.2"/>
+            <!-- Ground floor structural base pillars -->
+            <g stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2">
+              <line x1="55" y1="270" x2="55" y2="326"/>
+              <line x1="90" y1="270" x2="90" y2="326"/>
+              <line x1="125" y1="270" x2="125" y2="326"/>
+              <line x1="160" y1="270" x2="160" y2="326"/>
+              <line x1="480" y1="270" x2="480" y2="326"/>
+              <line x1="515" y1="270" x2="515" y2="326"/>
+              <line x1="550" y1="270" x2="550" y2="326"/>
+              <line x1="585" y1="270" x2="585" y2="326"/>
+            </g>
+
+            <!-- ============================================================= -->
+            <!-- LEVEL 2: ACTIVE DIGITAL TWIN SLAB (Prominently Glowing Cyan)   -->
+            <!-- ============================================================= -->
+            <g id="tt-active-floor-2">
+              <!-- Ambient Glow -->
+              <rect x="46" y="232" width="548" height="38" rx="5" fill="rgba(2, 132, 199, 0.45)" filter="url(#ttNeonGlow)"/>
+              
+              <!-- Active Glass Slab with Electric Cyan Gradient -->
+              <rect x="46" y="232" width="548" height="38" rx="5" fill="url(#ttFloor2Glow)" stroke="#FFFFFF" stroke-width="2.2"/>
+              
+              <!-- Window Panes for Floor 2 -->
+              <g fill="#071933" stroke="rgba(255, 255, 255, 0.6)" stroke-width="0.8">
+                <!-- Left Wing F2 Windows -->
+                <rect x="56" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="72" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="88" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="104" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="120" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="136" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="152" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="168" y="238" width="12" height="12" rx="1.5"/>
+
+                <!-- Right Wing F2 Windows -->
+                <rect x="460" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="476" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="492" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="508" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="524" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="540" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="556" y="238" width="12" height="12" rx="1.5"/>
+                <rect x="572" y="238" width="12" height="12" rx="1.5"/>
+              </g>
+
+              <!-- Central Cybernetic Pill Badge on Floor 2 -->
+              <rect x="198" y="238" width="244" height="26" rx="13" fill="rgba(8, 20, 44, 0.94)" stroke="#38BDF8" stroke-width="1.8" filter="drop-shadow(0 0 10px rgba(56, 189, 248, 0.8))"/>
+              <circle cx="216" cy="251" r="4.5" fill="#38BDF8" class="animate-ping"/>
+              <circle cx="216" cy="251" r="3" fill="#FFFFFF"/>
+              <text x="325" y="255" text-anchor="middle" fill="#FFFFFF" font-family="'IBM Plex Mono', monospace" font-size="10.5" font-weight="800" letter-spacing="1.5">
+                FLOOR 02 · DIGITAL TWIN ACTIVE
+              </text>
+            </g>
+
+            <!-- WINDOW RIBBONS ACROSS FLOORS 3 TO 7 (Matching Real Photo) -->
+            <g id="tt-upper-windows" fill="#0A1526" stroke="rgba(56, 189, 248, 0.4)" stroke-width="0.8">
+              <!-- Floor 7 Windows -->
+              <rect x="202" y="106" width="10" height="14" rx="1.5"/>
+              <rect x="216" y="106" width="10" height="14" rx="1.5"/>
+              <rect x="230" y="106" width="10" height="14" rx="1.5"/>
+              <rect x="400" y="106" width="10" height="14" rx="1.5"/>
+              <rect x="414" y="106" width="10" height="14" rx="1.5"/>
+              <rect x="428" y="106" width="10" height="14" rx="1.5"/>
+
+              <!-- Floor 6 Windows -->
+              <rect x="172" y="132" width="10" height="14" rx="1.5"/>
+              <rect x="186" y="132" width="10" height="14" rx="1.5"/>
+              <rect x="202" y="132" width="10" height="14" rx="1.5"/>
+              <rect x="216" y="132" width="10" height="14" rx="1.5"/>
+              <rect x="230" y="132" width="10" height="14" rx="1.5"/>
+              <rect x="400" y="132" width="10" height="14" rx="1.5"/>
+              <rect x="414" y="132" width="10" height="14" rx="1.5"/>
+              <rect x="428" y="132" width="10" height="14" rx="1.5"/>
+              <rect x="444" y="132" width="10" height="14" rx="1.5"/>
+              <rect x="458" y="132" width="10" height="14" rx="1.5"/>
+
+              <!-- Floor 5 Windows -->
+              <rect x="142" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="156" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="172" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="202" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="216" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="230" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="400" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="414" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="428" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="458" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="474" y="158" width="10" height="14" rx="1.5"/>
+              <rect x="488" y="158" width="10" height="14" rx="1.5"/>
+
+              <!-- Floor 4 Windows -->
+              <rect x="112" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="126" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="142" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="156" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="172" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="202" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="216" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="230" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="400" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="414" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="428" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="458" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="474" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="488" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="504" y="184" width="10" height="14" rx="1.5"/>
+              <rect x="518" y="184" width="10" height="14" rx="1.5"/>
+
+              <!-- Floor 3 Windows -->
+              <rect x="82" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="96" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="112" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="126" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="142" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="156" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="172" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="202" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="216" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="230" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="400" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="414" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="428" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="458" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="474" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="488" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="504" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="518" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="534" y="210" width="10" height="14" rx="1.5"/>
+              <rect x="548" y="210" width="10" height="14" rx="1.5"/>
+            </g>
+
+            <!-- INTERMEDIATE VERTICAL PROJECTING BAY COLUMNS (Matching Photo) -->
+            <!-- Left Intermediate Bay Column -->
+            <g id="tt-left-intermediate-bay">
+              <rect x="186" y="112" width="14" height="158" rx="3" fill="url(#ttFacadeHighlight)" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2"/>
+              <line x1="193" y1="112" x2="193" y2="270" stroke="rgba(2, 132, 199, 0.4)" stroke-width="1.5"/>
+            </g>
+
+            <!-- Right Intermediate Bay Column -->
+            <g id="tt-right-intermediate-bay">
+              <rect x="440" y="112" width="14" height="158" rx="3" fill="url(#ttFacadeHighlight)" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2"/>
+              <line x1="447" y1="112" x2="447" y2="270" stroke="rgba(2, 132, 199, 0.4)" stroke-width="1.5"/>
+            </g>
+
+            <!-- CENTRAL SECTION: FLANKING ELEVATOR SHAFTS & ICONIC ATRIUM -->
+            <!-- Left Central Elevator Shaft -->
+            <g id="tt-left-central-shaft">
+              <rect x="246" y="78" width="30" height="248" rx="4" fill="url(#ttFacadeHighlight)" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.4"/>
+              <!-- Vertical window slit array -->
+              <rect x="254" y="88" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <rect x="254" y="110" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <rect x="254" y="132" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <rect x="254" y="154" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <rect x="254" y="176" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <rect x="254" y="198" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+            </g>
+
+            <!-- Right Central Elevator Shaft -->
+            <g id="tt-right-central-shaft">
+              <rect x="364" y="78" width="30" height="248" rx="4" fill="url(#ttFacadeHighlight)" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.4"/>
+              <!-- Vertical window slit array -->
+              <rect x="372" y="88" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <rect x="372" y="110" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <rect x="372" y="132" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <rect x="372" y="154" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <rect x="372" y="176" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <rect x="372" y="198" width="14" height="12" rx="1" fill="#0A1424" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+            </g>
+
+            <!-- ICONIC CENTRAL ATRIUM WITH GABLE PEDIMENT & ARCHED GLASS -->
+            <g id="tt-central-atrium">
+              <!-- Top Triangular Gable Pediment -->
+              <path d="M 276 96 L 320 54 L 364 96 Z" fill="url(#ttFacadeHighlight)" stroke="#38BDF8" stroke-width="2"/>
+              <path d="M 284 96 L 320 62 L 356 96 Z" fill="url(#ttAtriumGlass)" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1"/>
+
+              <!-- Tall Vertical Glass Curtain Wall -->
+              <rect x="282" y="96" width="76" height="160" fill="url(#ttAtriumGlass)" stroke="rgba(56, 189, 248, 0.5)" stroke-width="1.5"/>
+              
+              <!-- Vertical Architectural Glass Mullions -->
+              <line x1="297" y1="96" x2="297" y2="256" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.2"/>
+              <line x1="320" y1="62" x2="320" y2="256" stroke="#FFFFFF" stroke-width="1.6"/>
+              <line x1="343" y1="96" x2="343" y2="256" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.2"/>
+
+              <!-- Horizontal Glass Transom Lines -->
+              <line x1="282" y1="122" x2="358" y2="122" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1"/>
+              <line x1="282" y1="150" x2="358" y2="150" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1"/>
+              <line x1="282" y1="178" x2="358" y2="178" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1"/>
+              <line x1="282" y1="206" x2="358" y2="206" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1"/>
+              <line x1="282" y1="232" x2="358" y2="232" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1"/>
+            </g>
+
+            <!-- ENTRANCE PORTICO (Pediment labeled TECHNOLOGY TOWER) -->
+            <g id="tt-entrance-portico">
+              <!-- Portico Triangular Pediment -->
+              <path d="M 270 274 L 320 248 L 370 274 Z" fill="#0E223D" stroke="#38BDF8" stroke-width="1.8"/>
+              
+              <!-- Inscription Nameplate -->
+              <rect x="274" y="274" width="92" height="14" rx="2" fill="#061224" stroke="rgba(56, 189, 248, 0.6)" stroke-width="1"/>
+              <text x="320" y="284.5" text-anchor="middle" fill="#E0F2FE" font-family="'IBM Plex Mono', monospace" font-size="7" font-weight="800" letter-spacing="1">
+                TECHNOLOGY TOWER
+              </text>
+
+              <!-- Portico Entrance Pillars & Archway -->
+              <rect x="276" y="288" width="88" height="38" rx="2" fill="rgba(8, 20, 40, 0.9)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+              <rect x="296" y="296" width="48" height="30" rx="4" fill="#030814" stroke="#38BDF8" stroke-width="1.2"/>
+              <line x1="320" y1="296" x2="320" y2="326" stroke="rgba(56, 189, 248, 0.5)" stroke-width="1"/>
+            </g>
+
+            <!-- Rooftop Foliage / Planters (Terraces in Photo) -->
+            <g fill="#059669" opacity="0.85">
+              <circle cx="205" cy="98" r="3"/>
+              <circle cx="215" cy="98" r="2.5"/>
+              <circle cx="235" cy="98" r="3"/>
+              <circle cx="405" cy="98" r="3"/>
+              <circle cx="425" cy="98" r="2.5"/>
+              <circle cx="435" cy="98" r="3"/>
+            </g>
           </svg>
         </div>
 
         <!-- Floating BMS Telemetry Callouts -->
-        <div class="hero-bms-pill absolute -top-2 sm:top-4 left-0 sm:-left-6 px-3.5 py-2.5 rounded-2xl flex items-center gap-3">
+        <div class="hero-bms-pill absolute -top-3 sm:top-0 left-0 sm:-left-4 px-3.5 py-2.5 rounded-2xl flex items-center gap-3">
           <div class="w-8 h-8 rounded-xl bg-sky-500/20 flex items-center justify-center text-sky-300 text-sm">
             ❄️
           </div>
@@ -448,12 +702,12 @@
         </div>
 
         <!-- Center Floating Action: GET /readings between Target HVAC and Floor 2 Load -->
-        <button onclick="openApiInspector()" class="hero-bms-pill absolute -top-5 sm:-top-3 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-2xl bg-sky-500/25 hover:bg-sky-500/40 text-sky-200 border border-sky-400/50 text-xs font-mono font-bold transition shadow-xl shadow-sky-500/20 flex items-center gap-2 cursor-pointer hover:scale-105">
+        <button onclick="openApiInspector()" class="hero-bms-pill absolute -top-6 sm:-top-5 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-2xl bg-sky-500/25 hover:bg-sky-500/40 text-sky-200 border border-sky-400/50 text-xs font-mono font-bold transition shadow-xl shadow-sky-500/20 flex items-center gap-2 cursor-pointer hover:scale-105">
           <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
           <span>GET /readings</span>
         </button>
 
-        <div class="hero-bms-pill absolute -top-2 sm:top-6 right-0 sm:-right-4 px-3.5 py-2.5 rounded-2xl flex items-center gap-3">
+        <div class="hero-bms-pill absolute -top-3 sm:top-2 right-0 sm:-right-4 px-3.5 py-2.5 rounded-2xl flex items-center gap-3">
           <div class="w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-300 text-sm">
             ⚡
           </div>
@@ -463,7 +717,7 @@
           </div>
         </div>
 
-        <div class="hero-bms-pill absolute bottom-6 left-0 sm:-left-8 px-3.5 py-2.5 rounded-2xl flex items-center gap-3">
+        <div class="hero-bms-pill absolute -bottom-4 sm:-bottom-2 left-0 sm:-left-4 px-3.5 py-2.5 rounded-2xl flex items-center gap-3">
           <div class="w-8 h-8 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-300 text-sm">
             👥
           </div>
@@ -473,7 +727,7 @@
           </div>
         </div>
 
-        <div class="hero-bms-pill absolute bottom-4 right-0 sm:-right-6 px-4 py-2.5 rounded-2xl flex items-center gap-3 border-sky-400/40 bg-sky-950/80">
+        <div class="hero-bms-pill absolute -bottom-4 sm:-bottom-2 right-0 sm:-right-4 px-4 py-2.5 rounded-2xl flex items-center gap-3 border-sky-400/40 bg-sky-950/80">
           <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-ping"></span>
           <div>
             <div class="text-xs font-mono font-bold text-sky-200">Floor 02 In Focus</div>
