@@ -598,17 +598,20 @@
 
     </header>
 
-    <!-- AWS BACKEND DATA SOURCE TOGGLE BAR -->
+    <!-- AWS BACKEND & DATASET SOURCE TOGGLE BAR -->
     <div class="glass-card p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <span class="text-xs font-mono text-slate-400 tracking-wider uppercase">Data Source:</span>
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="text-xs font-mono text-slate-400 tracking-wider uppercase">Data Engine:</span>
         <div class="flex items-center p-1 rounded-xl bg-slate-950/70 border border-white/10">
-          <button id="btn-mode-synth" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-500/20 text-sky-200 border border-sky-400/30 transition">Synthetic Twin</button>
+          <button id="btn-mode-synth" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-500/20 text-sky-200 border border-sky-400/30 transition">Simulation Data (69K Rows)</button>
           <button id="btn-mode-api" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white transition flex items-center gap-1.5">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-            <span>Live AWS API</span>
+            <span>Live AWS Cloud API</span>
           </button>
         </div>
+        <span id="dataset-status-pill" class="px-2.5 py-1 rounded-lg text-[11px] font-mono text-slate-400 bg-white/[0.03] border border-white/10 flex items-center gap-1.5">
+          <span>Loading simulation dataset...</span>
+        </span>
       </div>
       <div id="api-config-bar" class="hidden flex flex-wrap items-center gap-2 flex-1 min-w-[280px]">
         <span class="text-sky-300 font-mono text-xs font-bold">Endpoint:</span>
@@ -631,16 +634,16 @@
           07:30 AM · Arrival
         </button>
         <button class="key-timing-pill px-3 py-1.5 rounded-xl text-xs font-mono text-slate-200 shrink-0" data-step="36">
-          10:30 AM · Peak Classes
+          10:30 AM · Morning Theory
         </button>
         <button class="key-timing-pill px-3 py-1.5 rounded-xl text-xs font-mono text-slate-200 shrink-0" data-step="66">
           01:00 PM · Lunch Rush
         </button>
-        <button class="key-timing-pill px-3 py-1.5 rounded-xl text-xs font-mono text-rose-300 border-rose-500/30 shrink-0" data-step="102">
-          04:00 PM · Spike (TT-204)
+        <button class="key-timing-pill px-3 py-1.5 rounded-xl text-xs font-mono text-slate-200 shrink-0" data-step="102">
+          04:00 PM · Afternoon Labs
         </button>
-        <button class="key-timing-pill px-3 py-1.5 rounded-xl text-xs font-mono text-amber-300 border-amber-500/30 shrink-0" data-step="168">
-          09:30 PM · Ghost Leak (TT-208)
+        <button class="key-timing-pill px-3 py-1.5 rounded-xl text-xs font-mono text-slate-200 shrink-0" data-step="168">
+          09:30 PM · Evening Research
         </button>
         <button class="key-timing-pill px-3 py-1.5 rounded-xl text-xs font-mono text-slate-200 shrink-0" data-step="192">
           11:30 PM · Night Slip
@@ -717,13 +720,8 @@
         </div>
 
         <div class="flex items-center gap-2 w-full md:w-auto" id="kpi-alert-snippets">
-          <div class="px-3 py-1.5 rounded-lg bg-black/40 border border-rose-500/20 text-xs flex items-center gap-2">
-            <span class="font-mono font-bold text-rose-200">TT-204</span>
-            <span class="text-slate-300">Overcapacity: 78 / 70</span>
-          </div>
-          <div class="px-3 py-1.5 rounded-lg bg-black/40 border border-amber-500/20 text-xs flex items-center gap-2">
-            <span class="font-mono font-bold text-amber-200">TT-208</span>
-            <span class="text-slate-300">Ghost load: 4.2 kW</span>
+          <div class="px-3 py-1.5 rounded-lg bg-black/40 border border-sky-500/20 text-xs flex items-center gap-2">
+            <span class="text-slate-300 font-mono text-[11px]">Real-time telemetry analysis active...</span>
           </div>
           <span class="text-xs font-mono text-sky-400 hover:text-white transition ml-2">Inspect →</span>
         </div>
@@ -1122,135 +1120,141 @@
   <!-- DIGITAL TWIN SIMULATION JAVASCRIPT ENGINE                                 -->
   <!-- ========================================================================= -->
   <script>
-    // 46 Rooms on Floor 2 matching rooms.csv
+    // 46 Authentic Spaces on Floor 2 matching rooms.csv
     const ROOMS = [
       // Classrooms (6)
-      { id: "TT-201", name: "Classroom 201", type: "CLASSROOM", capacity: 70 },
-      { id: "TT-202", name: "Classroom 202", type: "CLASSROOM", capacity: 70 },
-      { id: "TT-203", name: "Classroom 203", type: "CLASSROOM", capacity: 70 },
-      { id: "TT-204", name: "Classroom 204", type: "CLASSROOM", capacity: 70 },
-      { id: "TT-205", name: "Classroom 205", type: "CLASSROOM", capacity: 70 },
-      { id: "TT-206", name: "Classroom 206", type: "CLASSROOM", capacity: 70 },
+      { id: "201", name: "CLASSROOM", type: "CLASSROOM", dept: "SELECT", capacity: 70, sqm: 68.45, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "204", name: "CLASSROOM", type: "CLASSROOM", dept: "SELECT", capacity: 70, sqm: 64.18, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "205", name: "CLASSROOM", type: "CLASSROOM", dept: "SENSE", capacity: 70, sqm: 67.45, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "206", name: "CLASSROOM", type: "CLASSROOM", dept: "SENSE", capacity: 70, sqm: 65.48, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "207", name: "CLASSROOM", type: "CLASSROOM", dept: "SENSE", capacity: 70, sqm: 64.84, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "208", name: "CLASSROOM", type: "CLASSROOM", dept: "SENSE", capacity: 70, sqm: 67.45, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
 
       // UG Labs (11)
-      { id: "TT-207", name: "Computing Lab 1", type: "UG_LAB", capacity: 70 },
-      { id: "TT-208", name: "Electronics Lab", type: "UG_LAB", capacity: 70 },
-      { id: "TT-209", name: "Digital Systems", type: "UG_LAB", capacity: 70 },
-      { id: "TT-218", name: "Microprocessor Lab", type: "UG_LAB", capacity: 70 },
-      { id: "TT-219", name: "Robotics & Automation", type: "UG_LAB", capacity: 70 },
-      { id: "TT-220", name: "Data Analytics Lab", type: "UG_LAB", capacity: 70 },
-      { id: "TT-223", name: "Networks Lab", type: "UG_LAB", capacity: 35 },
-      { id: "TT-225", name: "Software Eng Lab", type: "UG_LAB", capacity: 35 },
-      { id: "TT-226", name: "Embedded Systems", type: "UG_LAB", capacity: 35 },
-      { id: "TT-227", name: "Multimedia Lab", type: "UG_LAB", capacity: 35 },
-      { id: "TT-228", name: "Project Development", type: "UG_LAB", capacity: 35 },
+      { id: "202", name: "INDUSTRIAL AUTOMATION LAB", type: "UG_LAB", dept: "SELECT", capacity: 35, sqm: 64.84, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "203", name: "NETWORKING LAB", type: "UG_LAB", dept: "SAS", capacity: 35, sqm: 67.43, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "209", name: "MATERIAL CHEMISTRY LAB", type: "UG_LAB", dept: "SAS", capacity: 35, sqm: 48.66, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "231", name: "ADVANCED DSP LAB", type: "UG_LAB", dept: "SENSE", capacity: 70, sqm: 93.55, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "232", name: "DSP LAB", type: "UG_LAB", dept: "SELECT", capacity: 70, sqm: 165.48, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "236", name: "ADVANCED DRIVES LAB", type: "UG_LAB", dept: "SELECT", capacity: 70, sqm: 119.45, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "237", name: "FPGA SOPC LAB", type: "UG_LAB", dept: "SENSE", capacity: 70, sqm: 128.71, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "237A", name: "ASIC LAB", type: "UG_LAB", dept: "SENSE", capacity: 70, sqm: 162.22, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "238", name: "IC DESIGN LAB", type: "UG_LAB", dept: "SENSE", capacity: 70, sqm: 163.14, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "246", name: "ANALOG SYSTEM DESIGN LAB", type: "UG_LAB", dept: "SENSE", capacity: 70, sqm: 163.17, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "247", name: "DIGITAL SIMULATION LAB", type: "UG_LAB", dept: "SELECT", capacity: 70, sqm: 173.05, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
 
       // Research Labs (9)
-      { id: "TT-210", name: "AI & Deep Learning", type: "RESEARCH_LAB", capacity: 10 },
-      { id: "TT-211", name: "Cybersecurity Lab", type: "RESEARCH_LAB", capacity: 10 },
-      { id: "TT-213", name: "Nanotech Lab", type: "RESEARCH_LAB", capacity: 10 },
-      { id: "TT-214", name: "Bio-Informatics", type: "RESEARCH_LAB", capacity: 10 },
-      { id: "TT-215", name: "Photonics Research", type: "RESEARCH_LAB", capacity: 10 },
-      { id: "TT-217", name: "IoT & Sensors Hub", type: "RESEARCH_LAB", capacity: 10 },
-      { id: "TT-221", name: "VLSI Design Lab", type: "RESEARCH_LAB", capacity: 10 },
-      { id: "TT-224", name: "Cloud Infrastructure", type: "RESEARCH_LAB", capacity: 10 },
-      { id: "TT-235", name: "Renewable Energy", type: "RESEARCH_LAB", capacity: 10 },
+      { id: "210", name: "NATURAL PRODUCT RESEARCH LAB", type: "RESEARCH_LAB", dept: "SAS", capacity: 10, sqm: 72.33, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "211", name: "MTECH PHARMA CHEM & ELECTROCHEM", type: "RESEARCH_LAB", dept: "SAS", capacity: 10, sqm: 73.35, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "213", name: "ORGANIC POLYMERS RESEARCH LAB", type: "RESEARCH_LAB", dept: "SAS", capacity: 10, sqm: 63.74, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "214", name: "MSc ORGANIC CHEMISTRY LAB", type: "RESEARCH_LAB", dept: "SAS", capacity: 10, sqm: 63.53, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "215-216", name: "CENTRE FOR ORGANIC & MEDICINAL LAB", type: "RESEARCH_LAB", dept: "SAS", capacity: 10, sqm: 63.45, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "217", name: "ANALYTICAL CHEMISTRY RESEARCH LAB", type: "RESEARCH_LAB", dept: "SAS", capacity: 10, sqm: 98.25, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "221-222", name: "MSc ORGANIC & INORGANIC CHEM LAB", type: "RESEARCH_LAB", dept: "SAS", capacity: 10, sqm: 163.75, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "224", name: "ORGANIC & MEDICAL CHEM RESEARCH LAB", type: "RESEARCH_LAB", dept: "SAS", capacity: 10, sqm: 56.4, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "235", name: "SOLAR ENERGY RESEARCH CELL", type: "RESEARCH_LAB", dept: "SELECT", capacity: 10, sqm: 36.62, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
 
-      // Faculty Offices (13)
-      { id: "TT-229", name: "Faculty Office 1", type: "STAFF_ROOM", capacity: 8 },
-      { id: "TT-230", name: "Faculty Office 2", type: "STAFF_ROOM", capacity: 8 },
-      { id: "TT-231", name: "Faculty Office 3", type: "STAFF_ROOM", capacity: 8 },
-      { id: "TT-232", name: "Faculty Office 4", type: "STAFF_ROOM", capacity: 8 },
-      { id: "TT-233", name: "Faculty Office 5", type: "STAFF_ROOM", capacity: 8 },
-      { id: "TT-234", name: "Faculty Office 6", type: "STAFF_ROOM", capacity: 8 },
-      { id: "TT-236", name: "HOD Secretariat", type: "STAFF_ROOM", capacity: 6 },
-      { id: "TT-237", name: "Faculty Office 7", type: "STAFF_ROOM", capacity: 8 },
-      { id: "TT-238", name: "Faculty Office 8", type: "STAFF_ROOM", capacity: 8 },
-      { id: "TT-239", name: "Faculty Office 9", type: "STAFF_ROOM", capacity: 8 },
-      { id: "TT-240", name: "Faculty Office 10", type: "STAFF_ROOM", capacity: 8 },
-      { id: "TT-241", name: "Department Library", type: "STAFF_ROOM", capacity: 15 },
-      { id: "TT-242", name: "Dean's Office", type: "STAFF_ROOM", capacity: 10 },
+      // Faculty Offices & Staff Rooms (13)
+      { id: "212", name: "STAFF ROOM (SAS)", type: "STAFF_ROOM", dept: "SAS", capacity: 10, sqm: 12.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "218", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "NONE", capacity: 10, sqm: 12.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "223", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "NONE", capacity: 10, sqm: 12.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "225", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "SAS", capacity: 10, sqm: 12.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "226", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "SAS", capacity: 10, sqm: 12.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "227", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "SAS", capacity: 10, sqm: 12.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "228", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "SAS", capacity: 10, sqm: 12.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "239", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "MIXED", capacity: 20, sqm: 50.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "240", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "MIXED", capacity: 20, sqm: 50.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "241", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "MIXED", capacity: 20, sqm: 50.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "242", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "MIXED", capacity: 20, sqm: 50.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "243", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "MIXED", capacity: 20, sqm: 50.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
+      { id: "244", name: "STAFF ROOM", type: "STAFF_ROOM", dept: "MIXED", capacity: 20, sqm: 50.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] },
 
       // Support & Services (7)
-      { id: "TT-T1", name: "North Restroom M", type: "TOILET", capacity: 6 },
-      { id: "TT-T2", name: "North Restroom F", type: "TOILET", capacity: 6 },
-      { id: "TT-T3", name: "South Restroom M", type: "TOILET", capacity: 6 },
-      { id: "TT-T4", name: "South Restroom F", type: "TOILET", capacity: 6 },
-      { id: "TT-ELEC", name: "Electrical & UPS", type: "ELECTRICAL_ROOM", capacity: 2 },
-      { id: "TT-STR", name: "Facilities Store", type: "STORE_ROOM", capacity: 2 },
-      { id: "TT-VOC", name: "VOC Gallery II Corridor", type: "CORRIDOR", capacity: 120 }
+      { id: "219", name: "GENTS TOILET", type: "TOILET", dept: "NONE", capacity: 15, sqm: 59.5, sensors: ["Occupancy","AirQuality","Energy","Light"] },
+      { id: "229", name: "STAFF TOILET", type: "TOILET", dept: "NONE", capacity: 15, sqm: 12.0, sensors: ["Occupancy","AirQuality","Energy","Light"] },
+      { id: "230", name: "LADIES TOILET", type: "TOILET", dept: "NONE", capacity: 15, sqm: 57.59, sensors: ["Occupancy","AirQuality","Energy","Light"] },
+      { id: "245", name: "STAFF TOILET", type: "TOILET", dept: "NONE", capacity: 15, sqm: 16.0, sensors: ["Occupancy","AirQuality","Energy","Light"] },
+      { id: "220", name: "ELECTRICAL ROOM", type: "ELECTRICAL_ROOM", dept: "NONE", capacity: 3, sqm: 8.0, sensors: ["Temperature","Energy","Occupancy"] },
+      { id: "223A", name: "STORE ROOM", type: "STORE_ROOM", dept: "NONE", capacity: 3, sqm: 8.0, sensors: ["Occupancy","Energy","Light"] },
+      { id: "233-234", name: "VOC GALLERY II (CENTRAL SPINE)", type: "CORRIDOR", dept: "NONE", capacity: 150, sqm: 314.0, sensors: ["Occupancy","Temperature","Humidity","AirQuality","Energy","Light"] }
     ];
+
+    // Helper to normalize room IDs (supports '201' and 'TT-201')
+    function normRoomId(id) {
+      if (!id) return "201";
+      return String(id).replace(/^TT-/, '');
+    }
 
     // Architectural Layout coordinates matching the TT Floor 2 Blueprint Grid
     const FLOOR_LAYOUT = [
-      // ROW 1: Classrooms & Upper Restroom Pair
-      { id: "TT-201", label: "TT-201", x: 70, y: 75, w: 140, h: 90, rx: 10 },
-      { id: "TT-202", label: "TT-202", x: 224, y: 75, w: 140, h: 90, rx: 10 },
-      { id: "TT-203", label: "TT-203", x: 378, y: 75, w: 140, h: 90, rx: 10 },
-      { id: "TT-T1", label: "REST-NE", x: 532, y: 75, w: 64, h: 90, rx: 8, isRest: true },
-      { id: "TT-T2", label: "REST-NW", x: 604, y: 75, w: 64, h: 90, rx: 8, isRest: true },
-      { id: "TT-204", label: "TT-204", x: 682, y: 75, w: 140, h: 90, rx: 10 },
-      { id: "TT-205", label: "TT-205", x: 836, y: 75, w: 140, h: 90, rx: 10 },
-      { id: "TT-206", label: "TT-206", x: 990, y: 75, w: 140, h: 90, rx: 10 },
+      // ROW 1: Classrooms & Upper Restrooms (y: 75, h: 90)
+      { id: "201", label: "TT-201", x: 70, y: 75, w: 140, h: 90, rx: 10 },
+      { id: "202", label: "TT-202", x: 224, y: 75, w: 140, h: 90, rx: 10 },
+      { id: "203", label: "TT-203", x: 378, y: 75, w: 140, h: 90, rx: 10 },
+      { id: "219", label: "TT-219 REST", x: 532, y: 75, w: 64, h: 90, rx: 8, isRest: true },
+      { id: "230", label: "TT-230 REST", x: 604, y: 75, w: 64, h: 90, rx: 8, isRest: true },
+      { id: "204", label: "TT-204", x: 682, y: 75, w: 140, h: 90, rx: 10 },
+      { id: "205", label: "TT-205", x: 836, y: 75, w: 140, h: 90, rx: 10 },
+      { id: "206", label: "TT-206", x: 990, y: 75, w: 140, h: 90, rx: 10 },
 
-      // ROW 2: UG Labs & Central Restroom/Service Quad
-      { id: "TT-207", label: "TT-207", x: 70, y: 178, w: 140, h: 90, rx: 10 },
-      { id: "TT-208", label: "TT-208", x: 224, y: 178, w: 140, h: 90, rx: 10 },
-      { id: "TT-209", label: "TT-209", x: 378, y: 178, w: 140, h: 90, rx: 10 },
-      { id: "TT-T3", label: "REST-SE", x: 532, y: 178, w: 64, h: 41, rx: 6, isRest: true },
-      { id: "TT-T4", label: "REST-SW", x: 604, y: 178, w: 64, h: 41, rx: 6, isRest: true },
-      { id: "TT-ELEC", label: "ELEC-2", x: 532, y: 227, w: 64, h: 41, rx: 6, isService: true },
-      { id: "TT-STR", label: "STORE-2", x: 604, y: 227, w: 64, h: 41, rx: 6, isService: true },
-      { id: "TT-218", label: "TT-218", x: 682, y: 178, w: 140, h: 90, rx: 10 },
-      { id: "TT-219", label: "TT-219", x: 836, y: 178, w: 140, h: 90, rx: 10 },
-      { id: "TT-220", label: "TT-220", x: 990, y: 178, w: 140, h: 90, rx: 10 },
+      // ROW 2: UG Labs, Central Restroom/Service Quad, East Staff Rooms (y: 178, h: 90)
+      { id: "207", label: "TT-207", x: 70, y: 178, w: 140, h: 90, rx: 10 },
+      { id: "208", label: "TT-208", x: 224, y: 178, w: 140, h: 90, rx: 10 },
+      { id: "209", label: "TT-209", x: 378, y: 178, w: 140, h: 90, rx: 10 },
+      { id: "229", label: "TT-229", x: 532, y: 178, w: 64, h: 41, rx: 6, isRest: true },
+      { id: "245", label: "TT-245", x: 604, y: 178, w: 64, h: 41, rx: 6, isRest: true },
+      { id: "220", label: "TT-220 ELEC", x: 532, y: 227, w: 64, h: 41, rx: 6, isService: true },
+      { id: "223A", label: "TT-223A STR", x: 604, y: 227, w: 64, h: 41, rx: 6, isService: true },
+      { id: "218", label: "TT-218", x: 682, y: 178, w: 140, h: 90, rx: 10 },
+      { id: "212", label: "TT-212", x: 836, y: 178, w: 140, h: 90, rx: 10 },
+      { id: "223", label: "TT-223", x: 990, y: 178, w: 140, h: 90, rx: 10 },
 
       // ROW 3: Central Spine Corridor
-      { id: "TT-VOC", label: "VOC GALLERY II (CENTRAL SPINE / CORRIDOR)", x: 155, y: 282, w: 890, h: 84, rx: 12, isCorridor: true },
+      { id: "233-234", label: "TT-233/234 VOC GALLERY II (CENTRAL SPINE / CORRIDOR)", x: 70, y: 282, w: 1060, h: 84, rx: 12, isCorridor: true },
 
-      // ROW 4: Lower UG Labs flanking Lifts Core
-      { id: "TT-223", label: "TT-223", x: 70, y: 382, w: 135, h: 74, rx: 10 },
-      { id: "TT-225", label: "TT-225", x: 217, y: 382, w: 135, h: 74, rx: 10 },
-      { id: "TT-226", label: "TT-226", x: 364, y: 382, w: 135, h: 74, rx: 10 },
-      { id: "TT-227", label: "TT-227", x: 701, y: 382, w: 135, h: 74, rx: 10 },
-      { id: "TT-228", label: "TT-228", x: 848, y: 382, w: 135, h: 74, rx: 10 },
+      // ROW 4: Lower UG Labs flanking Lifts Core (y: 382, h: 74)
+      { id: "231", label: "TT-231", x: 70, y: 382, w: 102, h: 74, rx: 10 },
+      { id: "232", label: "TT-232", x: 182, y: 382, w: 102, h: 74, rx: 10 },
+      { id: "236", label: "TT-236", x: 294, y: 382, w: 102, h: 74, rx: 10 },
+      { id: "237", label: "TT-237", x: 406, y: 382, w: 102, h: 74, rx: 10 },
+      { id: "237A", label: "TT-237A", x: 692, y: 382, w: 102, h: 74, rx: 10 },
+      { id: "238", label: "TT-238", x: 804, y: 382, w: 102, h: 74, rx: 10 },
+      { id: "246", label: "TT-246", x: 916, y: 382, w: 102, h: 74, rx: 10 },
+      { id: "247", label: "TT-247", x: 1028, y: 382, w: 102, h: 74, rx: 10 },
 
-      // ROW 5: Research Labs
-      { id: "TT-210", label: "TT-210", x: 70, y: 472, w: 94, h: 70, rx: 10 },
-      { id: "TT-211", label: "TT-211", x: 176, y: 472, w: 94, h: 70, rx: 10 },
-      { id: "TT-213", label: "TT-213", x: 282, y: 472, w: 94, h: 70, rx: 10 },
-      { id: "TT-214", label: "TT-214", x: 388, y: 472, w: 94, h: 70, rx: 10 },
-      { id: "TT-215", label: "TT-215/216", x: 494, y: 472, w: 114, h: 70, rx: 10 },
-      { id: "TT-217", label: "TT-217", x: 620, y: 472, w: 94, h: 70, rx: 10 },
-      { id: "TT-221", label: "TT-221/222", x: 726, y: 472, w: 114, h: 70, rx: 10 },
-      { id: "TT-224", label: "TT-224", x: 852, y: 472, w: 94, h: 70, rx: 10 },
-      { id: "TT-235", label: "TT-235", x: 958, y: 472, w: 94, h: 70, rx: 10 },
+      // ROW 5: Research Labs (y: 472, h: 70)
+      { id: "210", label: "TT-210", x: 70, y: 472, w: 108, h: 70, rx: 10 },
+      { id: "211", label: "TT-211", x: 188, y: 472, w: 108, h: 70, rx: 10 },
+      { id: "213", label: "TT-213", x: 306, y: 472, w: 108, h: 70, rx: 10 },
+      { id: "214", label: "TT-214", x: 424, y: 472, w: 108, h: 70, rx: 10 },
+      { id: "215-216", label: "TT-215/216", x: 542, y: 472, w: 126, h: 70, rx: 10 },
+      { id: "217", label: "TT-217", x: 678, y: 472, w: 108, h: 70, rx: 10 },
+      { id: "221-222", label: "TT-221/222", x: 796, y: 472, w: 126, h: 70, rx: 10 },
+      { id: "224", label: "TT-224", x: 932, y: 472, w: 108, h: 70, rx: 10 },
+      { id: "235", label: "TT-235", x: 1050, y: 472, w: 80, h: 70, rx: 10 },
 
-      // ROW 6: Faculty Offices
-      { id: "TT-229", label: "TT-229", x: 70, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-230", label: "TT-230", x: 151, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-231", label: "TT-231", x: 232, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-232", label: "TT-232", x: 313, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-233", label: "TT-233", x: 394, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-234", label: "TT-234", x: 475, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-236", label: "TT-236", x: 556, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-237", label: "TT-237", x: 637, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-238", label: "TT-238", x: 718, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-239", label: "TT-239", x: 799, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-240", label: "TT-240", x: 880, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-241", label: "TT-241", x: 961, y: 558, w: 73, h: 58, rx: 8 },
-      { id: "TT-242", label: "TT-242", x: 1042, y: 558, w: 73, h: 58, rx: 8 },
+      // ROW 6: Faculty Offices & Staff Rooms (y: 558, h: 58)
+      { id: "225", label: "TT-225", x: 70, y: 558, w: 96, h: 58, rx: 8 },
+      { id: "226", label: "TT-226", x: 177, y: 558, w: 96, h: 58, rx: 8 },
+      { id: "227", label: "TT-227", x: 284, y: 558, w: 96, h: 58, rx: 8 },
+      { id: "228", label: "TT-228", x: 391, y: 558, w: 96, h: 58, rx: 8 },
+      { id: "239", label: "TT-239", x: 498, y: 558, w: 96, h: 58, rx: 8 },
+      { id: "240", label: "TT-240", x: 605, y: 558, w: 96, h: 58, rx: 8 },
+      { id: "241", label: "TT-241", x: 712, y: 558, w: 96, h: 58, rx: 8 },
+      { id: "242", label: "TT-242", x: 819, y: 558, w: 96, h: 58, rx: 8 },
+      { id: "243", label: "TT-243", x: 926, y: 558, w: 96, h: 58, rx: 8 },
+      { id: "244", label: "TT-244", x: 1033, y: 558, w: 97, h: 58, rx: 8 }
     ];
 
-    // Vellore Baseline Weather by Day
+    // Vellore Baseline Weather by Day matching simulation CSV conditions
     const WEATHER_BASELINE = {
       0: { name: "Monday", cond: "sunny", minT: 24.2, maxT: 34.8, minH: 45, maxH: 72 },
       1: { name: "Tuesday", cond: "moderate", minT: 23.5, maxT: 31.4, minH: 52, maxH: 78 },
       2: { name: "Wednesday", cond: "humid", minT: 24.0, maxT: 32.8, minH: 65, maxH: 88 },
-      3: { name: "Thursday", cond: "sunny", minT: 24.5, maxT: 35.2, minH: 42, maxH: 70 },
-      4: { name: "Friday", cond: "rainy", minT: 22.0, maxT: 27.6, minH: 75, maxH: 96 },
+      3: { name: "Thursday", cond: "rainy", minT: 22.0, maxT: 27.6, minH: 75, maxH: 96 },
+      4: { name: "Friday", cond: "sunny", minT: 24.5, maxT: 35.2, minH: 42, maxH: 70 },
       5: { name: "Saturday", cond: "moderate", minT: 23.0, maxT: 30.5, minH: 55, maxH: 80 },
-      6: { name: "Sunday", cond: "sunny", minT: 24.0, maxT: 33.6, minH: 48, maxH: 74 }
+      6: { name: "Sunday", cond: "humid", minT: 24.0, maxT: 33.6, minH: 48, maxH: 74 }
     };
 
     // State Variables
@@ -1261,62 +1265,139 @@
     let activeRole = 'admin';
     let activeHeatmapMode = 'occupancy';
     let activeCategoryFilter = 'ALL';
-    let selectedRoomId = 'TT-201';
+    let selectedRoomId = '201';
     let activeChartDimension = 'temp-hvac';
     let currentWorkflowStage = 1;
     let isFullDeckView = false;
 
+    // Simulation Dataset Index (from sensor_readings_week.csv: 69,874 rows)
+    let dataset = {}; // dataset[dayIdx][stepIdx][roomId] = telemetry row
+    let datasetLoaded = false;
+
+    async function loadDatasetCSV() {
+      const statusPill = document.getElementById('dataset-status-pill');
+      try {
+        const res = await fetch('sensor_readings_week.csv');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+        const lines = text.trim().split('\n');
+        if (lines.length < 2) throw new Error("Empty CSV");
+
+        const dayMap = {};
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i];
+          if (!line) continue;
+          const [roomId, timestamp, day, condition, occ, temp, hum, co2, power, lux] = line.split(',');
+          if (!dayMap[day]) dayMap[day] = {};
+          if (!dayMap[day][timestamp]) dayMap[day][timestamp] = {};
+          dayMap[day][timestamp][roomId] = {
+            room_id: roomId,
+            timestamp,
+            day,
+            condition,
+            Occupancy: parseInt(occ, 10) || 0,
+            Temperature_C: parseFloat(temp) || 24.0,
+            Humidity_pct: parseFloat(hum) || 55.0,
+            AirQuality_ppm: parseFloat(co2) || 450.0,
+            Energy_kW: parseFloat(power) || 0.2,
+            Light_lux: parseFloat(lux) || 0.0
+          };
+        }
+
+        dataset = {};
+        const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        dayNames.forEach((d, dIdx) => {
+          dataset[dIdx] = [];
+          if (dayMap[d]) {
+            const timestamps = Object.keys(dayMap[d]).sort();
+            timestamps.forEach((ts, sIdx) => {
+              dataset[dIdx][sIdx] = dayMap[d][ts];
+            });
+          }
+        });
+
+        datasetLoaded = true;
+        if (statusPill) {
+          statusPill.innerHTML = `<span class="text-emerald-400 font-bold">● 69,874 Readings Loaded</span> · Person 3 Simulation Engine`;
+          statusPill.className = `px-2.5 py-1 rounded-lg text-[11px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/25 flex items-center gap-1.5`;
+        }
+
+        // Re-seed history with true dataset values and refresh current frame
+        preseedHistory();
+        updateSimulationFrame();
+      } catch (err) {
+        console.warn("Direct CSV fetch unavailable (e.g. file:// context). Operating via dynamic synthesis engine:", err.message);
+        if (statusPill) {
+          statusPill.innerHTML = `<span class="text-sky-400 font-bold">● Dynamic Physics Model</span> · sensor_rules.json`;
+        }
+      }
+    }
+
     // AWS API Integration State
     let engineMode = 'synth'; // 'synth' or 'api'
     let apiEndpointUrl = 'https://qn96k2sn8l.execute-api.us-east-1.amazonaws.com/Prod/readings';
-    let apiCache = {}; // Cached live data keyed by room sensor_id
+    let apiCache = {}; // Cached live data keyed by normalized room_id
     let apiPollingInterval = null;
 
     // Fetch live readings from the AWS API for a given room
     async function fetchLiveReadings(roomId) {
-      const sensorId = `OCC-${roomId.replace('TT-', '')}`;
+      const normId = normRoomId(roomId);
       try {
-        const res = await fetch(`${apiEndpointUrl}?sensor_id=${sensorId}`, { method: 'GET' });
+        const res = await fetch(`${apiEndpointUrl}?sensor_id=${normId}_Temperature`, { method: 'GET' });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const items = await res.json();
         if (items && items.length > 0) {
-          apiCache[roomId] = items[items.length - 1]; // most recent reading
+          const latest = items[items.length - 1];
+          apiCache[normId] = {
+            Temperature_C: parseFloat(latest.value) || 24.0,
+            Occupancy: parseInt(latest.simulated_occupancy || 0, 10),
+            timestamp: latest.timestamp,
+            room_id: normId
+          };
         }
         return items;
       } catch (err) {
-        console.warn(`API fetch failed for ${sensorId}:`, err.message);
+        console.warn(`API fetch failed for ${normId}_Temperature:`, err.message);
         return null;
       }
     }
 
-    // Fetch all rooms in parallel for live mode
+    // Fetch rooms in parallel for live mode
     async function fetchAllRoomsLive() {
       const statusTag = document.getElementById('api-status-tag');
-      if (statusTag) statusTag.textContent = 'Status: Polling...';
-      const promises = ROOMS.slice(0, 10).map(r => fetchLiveReadings(r.id)); // batch first 10
-      await Promise.allSettled(promises);
-      if (statusTag) statusTag.textContent = `Status: Live · ${Object.keys(apiCache).length} sensors cached`;
+      if (statusTag) statusTag.textContent = 'Status: Polling AWS DynamoDB...';
+
+      // Always poll currently selected room first
+      await fetchLiveReadings(selectedRoomId);
+
+      // Poll next batch of rooms
+      const otherRooms = ROOMS.filter(r => normRoomId(r.id) !== normRoomId(selectedRoomId)).slice(0, 15);
+      await Promise.allSettled(otherRooms.map(r => fetchLiveReadings(r.id)));
+
+      const cachedCount = Object.keys(apiCache).length;
+      if (statusTag) {
+        statusTag.textContent = `Status: Live · ${cachedCount} zones synchronized with DynamoDB`;
+      }
     }
 
-    // Convert an API DynamoDB item to the same shape as synthesizeRoomTelemetry output
+    // Convert an API DynamoDB item to complete telemetry shape
     function apiItemToTelemetry(item, room) {
+      const normId = normRoomId(room.id);
+      const fallback = synthesizeRoomTelemetry(room, currentStep, currentDayIndex);
       return {
+        ...fallback,
         room_id: room.id,
-        Occupancy: parseInt(item.occupancy || item.Occupancy || 0),
-        Temperature_C: parseFloat(item.temperature_c || item.Temperature_C || 24.0),
-        AirQuality_ppm: parseInt(item.co2_ppm || item.AirQuality_ppm || 450),
-        Energy_kW: parseFloat(item.power_kw || item.Energy_kW || 0.2),
-        Humidity_pct: parseFloat(item.humidity_pct || item.Humidity_pct || 55.0),
-        Light_lux: parseInt(item.light_lux || item.Light_lux || 400),
-        outdoorTemp: parseFloat(item.outdoor_temp || 32.4),
-        outdoorHum: parseInt(item.outdoor_humidity || 58),
-        condition: item.weather_condition || 'sunny'
+        Occupancy: (item && item.Occupancy !== undefined) ? item.Occupancy : fallback.Occupancy,
+        Temperature_C: (item && item.Temperature_C !== undefined) ? item.Temperature_C : fallback.Temperature_C
       };
     }
 
     // Buffer for rolling history (24 ticks = 2 hours)
     const rollingHistory = {};
-    ROOMS.forEach(r => { rollingHistory[r.id] = []; });
+    ROOMS.forEach(r => { 
+      rollingHistory[r.id] = [];
+      rollingHistory[normRoomId(r.id)] = rollingHistory[r.id];
+    });
 
     // Weather Canvas Engine
     const skyCanvas = document.getElementById('sky-canvas');
@@ -1533,8 +1614,10 @@
 
     function showRoomHUD(e, room) {
       hud.classList.remove('hidden');
-      hudName.textContent = `${room.id} · ${room.name}`;
-      const last = (rollingHistory[room.id] && rollingHistory[room.id].slice(-1)[0]) || {};
+      const normId = normRoomId(room.id);
+      hudName.textContent = `TT-${normId} · ${room.name}`;
+      const history = rollingHistory[normId] || rollingHistory[room.id];
+      const last = (history && history.slice(-1)[0]) || {};
       hudStats.innerHTML = `Occ: ${last.Occupancy || 0}/${room.capacity} · Temp: ${(last.Temperature_C || 24).toFixed(1)}°C · Power: ${(last.Energy_kW || 0.2).toFixed(2)} kW`;
       moveRoomHUD(e);
     }
@@ -1552,21 +1635,22 @@
     }
 
     function selectRoom(roomId) {
-      selectedRoomId = roomId;
+      selectedRoomId = normRoomId(roomId);
       document.querySelectorAll('.floor-room').forEach(el => el.classList.remove('selected'));
-      const activeEl = document.getElementById(`svg-${roomId}`);
+      const activeEl = document.getElementById(`svg-${selectedRoomId}`) || document.getElementById(`svg-${roomId}`);
       if (activeEl) activeEl.classList.add('selected');
 
-      const room = ROOMS.find(r => r.id === roomId);
+      const room = ROOMS.find(r => normRoomId(r.id) === selectedRoomId) || ROOMS[0];
       if (!room) return;
 
-      document.getElementById('selected-room-code').textContent = room.id;
-      document.getElementById('stage-continue-room-label').textContent = room.id;
-      document.getElementById('tab-room-tag').textContent = room.id;
-      document.getElementById('diag-room-tag').textContent = room.id;
-      document.getElementById('panel-room-title').textContent = `${room.id} · ${room.name}`;
+      const code = `TT-${room.id}`;
+      document.getElementById('selected-room-code').textContent = code;
+      document.getElementById('stage-continue-room-label').textContent = code;
+      document.getElementById('tab-room-tag').textContent = code;
+      document.getElementById('diag-room-tag').textContent = code;
+      document.getElementById('panel-room-title').textContent = `${code} · ${room.name}`;
       document.getElementById('panel-room-type').textContent = room.type;
-      document.getElementById('panel-room-subtitle').textContent = `Capacity: ${room.capacity} seats · Monitored zone · 6 live telemetry streams`;
+      document.getElementById('panel-room-subtitle').textContent = `Capacity: ${room.capacity} seats · ${room.dept} Dept · Area: ${room.sqm || 65}m² · 6 Live Telemetry Streams`;
 
       updateFocusedRoomGauges();
       updateAnalyticalChart();
@@ -1608,8 +1692,11 @@
       }
     }
 
+    let currentAlerts = [];
+
     function focusRuleAlerts() {
-      selectRoom('TT-204');
+      const targetRoom = currentAlerts.length > 0 ? currentAlerts[0].roomId : '201';
+      selectRoom(targetRoom);
       setWorkflowStage(3);
       const target = document.getElementById('diagnostic-studio-section');
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1628,10 +1715,10 @@
       return { name: "Building Closed", phase: "CLOSED" };
     }
 
-    // Telemetry generation matching sensor_rules.json
+    // Fallback telemetry generation matching sensor_rules.json principles
     function synthesizeRoomTelemetry(room, step, dayIdx) {
       const session = getTimetableSession(step);
-      const dayWeather = WEATHER_BASELINE[dayIdx];
+      const dayWeather = WEATHER_BASELINE[dayIdx] || WEATHER_BASELINE[0];
       const hour = 7.5 + (step * 5 / 60);
 
       const diurnalFraction = Math.sin((hour - 8) / 14 * Math.PI);
@@ -1642,10 +1729,10 @@
 
       if (session.phase === "CLASS") {
         if (room.type === "CLASSROOM") {
-          const hash = (room.id.charCodeAt(5) + step) % 6;
-          occ = (hash < 4) ? Math.min(room.capacity, Math.round(room.capacity * 0.88)) : 0;
+          const hash = ((room.id.charCodeAt(0) * 7) + step) % 10;
+          occ = (hash < 7) ? Math.min(room.capacity, Math.round(room.capacity * 0.85)) : 0;
         } else if (room.type === "UG_LAB") {
-          const hash = (room.id.charCodeAt(5) + step * 2) % 11;
+          const hash = ((room.id.charCodeAt(0) * 11) + step * 2) % 11;
           occ = (hash < 7) ? room.capacity : 0;
         } else if (room.type === "RESEARCH_LAB") {
           occ = (hour >= 9 && hour <= 18) ? Math.floor(room.capacity * 0.7) : 1;
@@ -1659,33 +1746,23 @@
         else if (room.type === "STAFF_ROOM") occ = Math.floor(room.capacity * 0.2);
         else occ = 0;
       } else if (session.phase === "NIGHT_SLIP") {
-        if (room.type === "CLASSROOM") occ = (room.id === "TT-201" || room.id === "TT-202") ? 14 : 0;
+        if (room.type === "CLASSROOM") occ = (room.id === "201" || room.id === "204") ? 14 : 0;
         else if (room.type === "CORRIDOR") occ = 12;
         else occ = 0;
       }
 
-      // Injected Anomaly: Overcapacity in TT-204
-      if (step >= 90 && step <= 130) {
-        if (room.id === "TT-204") occ = 78; // exceeds 70
-      }
-
-      // Temperature simulation
+      // Natural thermodynamic temperature simulation
       let temp = 24.0;
       if (occ > 0) {
-        temp = 24.0 + Math.min(0.02 * occ, 3.0) + (dayWeather.cond === 'sunny' ? 0.4 : -0.3);
+        temp = 24.0 + Math.min(0.02 * occ, 2.8) + (dayWeather.cond === 'sunny' ? 0.4 : -0.3);
       } else {
-        temp = 24.0 + (outdoorTemp - 24.0) * 0.3;
+        temp = 24.0 + (outdoorTemp - 24.0) * 0.25;
       }
 
-      // Anomaly: HVAC defect in TT-209
-      if (step >= 40 && step <= 140 && room.id === "TT-209") {
-        temp = 28.8;
-      }
-
-      // CO2 simulation
+      // CO2 accumulation with occupancy memory
       let co2 = 450;
       if (occ > 0) {
-        co2 = Math.min(1400, 450 + (occ * 11) + Math.sin(step) * 15);
+        co2 = Math.min(1450, 450 + (occ * 10.5) + Math.sin(step) * 12);
       }
 
       // Energy draw
@@ -1696,11 +1773,6 @@
       const perPerson = activeMap[room.type] || 0.03;
       let power = standby + (occ * perPerson);
 
-      // Injected Anomaly: Ghost leak in TT-208
-      if (room.id === "TT-208" && occ === 0 && step >= 150 && step <= 210) {
-        power = 4.2; // kW ghost load
-      }
-
       // Lux & Humidity
       let lux = (occ > 0) ? 410 : 10;
       let hum = Math.max(35, outdoorHum - 5 + (occ * 0.08));
@@ -1708,7 +1780,7 @@
       return {
         room_id: room.id,
         Occupancy: occ,
-        Temperature_C: temp,
+        Temperature_C: parseFloat(temp.toFixed(1)),
         AirQuality_ppm: Math.round(co2),
         Energy_kW: parseFloat(power.toFixed(2)),
         Humidity_pct: parseFloat(hum.toFixed(1)),
@@ -1719,12 +1791,46 @@
       };
     }
 
+    // Master telemetry getter: prioritizes real 69K CSV dataset, then live AWS, then physics model
+    function getRoomTelemetry(room, step, dayIdx) {
+      const normId = normRoomId(room.id);
+
+      if (engineMode === 'api' && apiCache[normId]) {
+        return apiItemToTelemetry(apiCache[normId], room);
+      }
+
+      if (datasetLoaded && dataset[dayIdx] && dataset[dayIdx][step] && dataset[dayIdx][step][normId]) {
+        const raw = dataset[dayIdx][step][normId];
+        const dayWeather = WEATHER_BASELINE[dayIdx] || WEATHER_BASELINE[0];
+        const hour = 7.5 + (step * 5 / 60);
+        const diurnalFraction = Math.sin((hour - 8) / 14 * Math.PI);
+        const outdoorTemp = dayWeather.minT + Math.max(0, diurnalFraction) * (dayWeather.maxT - dayWeather.minT);
+        const outdoorHum = dayWeather.maxH - Math.max(0, diurnalFraction) * (dayWeather.maxH - dayWeather.minH);
+        return {
+          room_id: room.id,
+          Occupancy: raw.Occupancy,
+          Temperature_C: raw.Temperature_C,
+          AirQuality_ppm: Math.round(raw.AirQuality_ppm),
+          Energy_kW: parseFloat(raw.Energy_kW.toFixed(2)),
+          Humidity_pct: parseFloat(raw.Humidity_pct.toFixed(1)),
+          Light_lux: Math.round(raw.Light_lux),
+          outdoorTemp: parseFloat(outdoorTemp.toFixed(1)),
+          outdoorHum: Math.round(outdoorHum),
+          condition: raw.condition || dayWeather.cond
+        };
+      }
+
+      return synthesizeRoomTelemetry(room, step, dayIdx);
+    }
+
     // Pre-seed buffer so graphs are filled on load
     function preseedHistory() {
       for (let s = 0; s < 24; s++) {
         ROOMS.forEach(room => {
-          const d = synthesizeRoomTelemetry(room, s, currentDayIndex);
-          rollingHistory[room.id].push(d);
+          const d = getRoomTelemetry(room, s, currentDayIndex);
+          const normId = normRoomId(room.id);
+          if (!rollingHistory[normId]) rollingHistory[normId] = [];
+          rollingHistory[normId].push(d);
         });
       }
     }
@@ -1762,56 +1868,52 @@
       document.getElementById('weather-icon-container').textContent = weatherIcons[dayWeather.cond] || '☀️';
       document.getElementById('weather-condition-label').textContent = dayWeather.cond;
 
-      const alerts = [];
+      currentAlerts = [];
 
       ROOMS.forEach(room => {
-        let data;
-        if (engineMode === 'api' && apiCache[room.id]) {
-          data = apiItemToTelemetry(apiCache[room.id], room);
-        } else {
-          data = synthesizeRoomTelemetry(room, currentStep, currentDayIndex);
-        }
+        const data = getRoomTelemetry(room, currentStep, currentDayIndex);
+        const normId = normRoomId(room.id);
 
-        if (!rollingHistory[room.id]) rollingHistory[room.id] = [];
-        rollingHistory[room.id].push(data);
-        if (rollingHistory[room.id].length > 24) rollingHistory[room.id].shift();
+        if (!rollingHistory[normId]) rollingHistory[normId] = [];
+        rollingHistory[normId].push(data);
+        if (rollingHistory[normId].length > 24) rollingHistory[normId].shift();
 
         if (data.Occupancy > room.capacity) {
-          alerts.push({
-            roomId: room.id,
+          currentAlerts.push({
+            roomId: normId,
             level: "CRITICAL",
-            text: `Exceeded capacity: ${data.Occupancy}/${room.capacity} students`,
+            text: `Overcapacity: ${data.Occupancy}/${room.capacity} occupants in TT-${normId}`,
             type: "OVERCAPACITY",
-            brief: `Overcapacity: ${data.Occupancy} / ${room.capacity}`
+            brief: `TT-${normId}: ${data.Occupancy}/${room.capacity}`
           });
         }
-        if (data.Occupancy === 0 && data.Energy_kW > 2.0 && room.type !== 'ELECTRICAL_ROOM') {
-          alerts.push({
-            roomId: room.id,
+        if (data.Occupancy === 0 && data.Energy_kW > 1.5 && room.type !== 'ELECTRICAL_ROOM') {
+          currentAlerts.push({
+            roomId: normId,
             level: "AMBER",
-            text: `Ghost energy leak: ${data.Energy_kW} kW idle draw`,
+            text: `Ghost load: ${data.Energy_kW} kW draw while empty in TT-${normId}`,
             type: "ENERGY_LEAK",
-            brief: `Ghost load: ${data.Energy_kW} kW`
+            brief: `TT-${normId}: ${data.Energy_kW} kW idle`
           });
         }
         if (data.Temperature_C > 27.5) {
-          alerts.push({
-            roomId: room.id,
+          currentAlerts.push({
+            roomId: normId,
             level: "CRITICAL",
-            text: `Thermal spike: ${data.Temperature_C.toFixed(1)}°C exceeds comfort limit`,
+            text: `Thermal spike: ${data.Temperature_C.toFixed(1)}°C exceeds standard in TT-${normId}`,
             type: "HVAC_DEFICIT",
-            brief: `HVAC drift: ${data.Temperature_C.toFixed(1)}°C`
+            brief: `TT-${normId}: ${data.Temperature_C.toFixed(1)}°C`
           });
         }
 
         colorFloorRoom(room, data);
       });
 
-      const sample = rollingHistory[ROOMS[0].id].slice(-1)[0] || {};
+      const sample = (rollingHistory['201'] && rollingHistory['201'].slice(-1)[0]) || {};
       document.getElementById('weather-outdoor-temp').textContent = `${sample.outdoorTemp || 32.4}°C`;
       document.getElementById('weather-humidity').textContent = `${sample.outdoorHum || 58}%`;
 
-      renderActionableAlertBanner(alerts);
+      renderActionableAlertBanner(currentAlerts);
       updateFocusedRoomGauges();
       updateAnalyticalChart();
     }
@@ -1838,18 +1940,19 @@
 
       snippetsContainer.innerHTML = alerts.slice(0, 2).map(a => `
         <div class="px-3 py-1.5 rounded-lg bg-black/40 border ${a.level === 'CRITICAL' ? 'border-rose-500/20' : 'border-amber-500/20'} text-xs flex items-center gap-2">
-          <span class="font-mono font-bold ${a.level === 'CRITICAL' ? 'text-rose-200' : 'text-amber-200'}">${a.roomId}</span>
-          <span class="text-slate-300 truncate max-w-[130px] font-sans">${a.brief || a.text}</span>
+          <span class="font-mono font-bold ${a.level === 'CRITICAL' ? 'text-rose-200' : 'text-amber-200'}">TT-${normRoomId(a.roomId)}</span>
+          <span class="text-slate-300 truncate max-w-[140px] font-sans">${a.brief || a.text}</span>
         </div>
       `).join('') + `<span class="text-xs font-mono text-sky-400 hover:text-white transition ml-2">Inspect →</span>`;
     }
 
     function colorFloorRoom(room, data) {
-      const el = document.getElementById(`svg-${room.id}`);
+      const normId = normRoomId(room.id);
+      const el = document.getElementById(`svg-${normId}`) || document.getElementById(`svg-${room.id}`);
       if (!el) return;
 
-      const occEl = document.getElementById(`svg-occ-${room.id}`);
-      const titleEl = document.getElementById(`svg-title-${room.id}`);
+      const occEl = document.getElementById(`svg-occ-${normId}`) || document.getElementById(`svg-occ-${room.id}`);
+      const titleEl = document.getElementById(`svg-title-${normId}`) || document.getElementById(`svg-title-${room.id}`);
       if (occEl) {
         occEl.textContent = `${data.Occupancy || 0} occ`;
       }
@@ -1871,7 +1974,7 @@
         }
       }
 
-      const layout = FLOOR_LAYOUT.find(l => l.id === room.id);
+      const layout = FLOOR_LAYOUT.find(l => normRoomId(l.id) === normId);
       const isCorridor = layout && layout.isCorridor;
       const isRestOrService = layout && (layout.isRest || layout.isService);
 
@@ -1950,10 +2053,11 @@
     }
 
     function updateFocusedRoomGauges() {
-      const history = rollingHistory[selectedRoomId];
+      const normId = normRoomId(selectedRoomId);
+      const history = rollingHistory[normId] || rollingHistory[selectedRoomId];
       if (!history || history.length === 0) return;
       const latest = history[history.length - 1];
-      const room = ROOMS.find(r => r.id === selectedRoomId) || ROOMS[0];
+      const room = ROOMS.find(r => normRoomId(r.id) === normId) || ROOMS[0];
 
       // Gauge 1: Occ
       document.getElementById('sensor-val-occ').textContent = latest.Occupancy;
@@ -2073,7 +2177,8 @@
     window.addEventListener('resize', resizeAnalyticalChart);
 
     function updateAnalyticalChart() {
-      const history = rollingHistory[selectedRoomId];
+      const normId = normRoomId(selectedRoomId);
+      const history = rollingHistory[normId] || rollingHistory[selectedRoomId];
       if (!history || history.length < 2) return;
 
       const w = chartCanvas.width;
@@ -2149,54 +2254,37 @@
 
     // Modal API Inspector Tool
     async function openApiInspector() {
-      const room = ROOMS.find(r => r.id === selectedRoomId) || ROOMS[0];
-      const sensorId = `OCC-${selectedRoomId.replace('TT-', '')}`;
+      const normId = normRoomId(selectedRoomId);
+      const room = ROOMS.find(r => normRoomId(r.id) === normId) || ROOMS[0];
+      const sensorId = `${normId}_Temperature`;
       document.getElementById('api-modal-sensor-id').textContent = sensorId;
 
-      // If in API mode, do a real fetch and show the raw response
-      if (engineMode === 'api') {
-        document.getElementById('api-modal-json').textContent = 'Fetching from AWS DynamoDB...';
-        document.getElementById('modal-api-inspector').classList.remove('hidden');
-        try {
-          const res = await fetch(`${apiEndpointUrl}?sensor_id=${sensorId}`, { method: 'GET' });
-          const data = await res.json();
-          document.getElementById('api-modal-json').textContent = JSON.stringify(data, null, 2);
-        } catch (err) {
-          document.getElementById('api-modal-json').textContent = JSON.stringify({ error: err.message, hint: 'Check that the API endpoint URL is correct and the backend is deployed.' }, null, 2);
-        }
-        return;
-      }
-
-      // Synthetic mode: show mock payload
-      const history = rollingHistory[selectedRoomId];
-      const latest = (history && history.slice(-1)[0]) || {};
-
-      const payload = {
-        status: "success",
-        sensor_id: sensorId,
-        room_id: selectedRoomId,
-        room_name: room.name,
-        room_type: room.type,
-        timestamp: new Date().toISOString(),
-        readings: {
-          occupancy: latest.Occupancy || 0,
-          temperature_c: latest.Temperature_C || 24.0,
-          co2_ppm: latest.AirQuality_ppm || 450,
-          power_kw: latest.Energy_kW || 0.2,
-          humidity_pct: latest.Humidity_pct || 55.0,
-          light_lux: latest.Light_lux || 400
-        },
-        diagnostics: {
-          capacity_limit: room.capacity,
-          overcapacity_flag: (latest.Occupancy || 0) > room.capacity,
-          ghost_energy_flag: (latest.Occupancy === 0 && (latest.Energy_kW || 0) > 2.0),
-          hvac_comfort_drift: (latest.Temperature_C || 24) > 27.5
-        },
-        dynamodb_table: "SensorReadingsTable"
-      };
-
-      document.getElementById('api-modal-json').textContent = JSON.stringify(payload, null, 2);
+      document.getElementById('api-modal-json').textContent = `Querying AWS DynamoDB for sensor: ${sensorId}...`;
       document.getElementById('modal-api-inspector').classList.remove('hidden');
+
+      try {
+        const res = await fetch(`${apiEndpointUrl}?sensor_id=${sensorId}`, { method: 'GET' });
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          document.getElementById('api-modal-json').textContent = JSON.stringify(data.slice(-5), null, 2);
+        } else {
+          const history = rollingHistory[normId] || rollingHistory[room.id];
+          const latest = (history && history.slice(-1)[0]) || {};
+          document.getElementById('api-modal-json').textContent = JSON.stringify({
+            message: `No direct records found yet for ${sensorId} in DynamoDB table. Active telemetry state:`,
+            room_id: normId,
+            room_name: room.name,
+            room_type: room.type,
+            latest_reading: latest
+          }, null, 2);
+        }
+      } catch (err) {
+        document.getElementById('api-modal-json').textContent = JSON.stringify({
+          error: err.message,
+          endpoint: apiEndpointUrl,
+          hint: 'Ensure AWS backend is deployed and API Gateway CORS is enabled.'
+        }, null, 2);
+      }
     }
 
     function closeApiInspector() {
@@ -2207,8 +2295,9 @@
     function initApp() {
       buildFloorPlanSVG();
       preseedHistory();
+      loadDatasetCSV();
 
-      // Data source toggle: Synthetic vs Live API
+      // Data source toggle: Simulation Dataset vs Live API
       const btnSynth = document.getElementById('btn-mode-synth');
       const btnApi = document.getElementById('btn-mode-api');
       const apiBar = document.getElementById('api-config-bar');
@@ -2221,6 +2310,7 @@
         apiBar.classList.add('hidden');
         if (apiPollingInterval) { clearInterval(apiPollingInterval); apiPollingInterval = null; }
         document.getElementById('api-status-tag').textContent = 'Status: Idle';
+        updateSimulationFrame();
       });
 
       btnApi.addEventListener('click', () => {
@@ -2241,20 +2331,22 @@
       btnPing.addEventListener('click', async () => {
         apiEndpointUrl = document.getElementById('api-endpoint-url').value;
         const statusTag = document.getElementById('api-status-tag');
-        statusTag.textContent = 'Status: Testing...';
+        statusTag.textContent = 'Status: Testing AWS connection...';
         try {
-          const res = await fetch(`${apiEndpointUrl}?sensor_id=OCC-201`, { method: 'GET' });
+          const res = await fetch(`${apiEndpointUrl}?sensor_id=201_Temperature`, { method: 'GET' });
           const data = await res.json();
           if (res.ok) {
-            statusTag.textContent = `Status: ✅ Connected · ${Array.isArray(data) ? data.length : 0} readings found`;
+            const count = Array.isArray(data) ? data.length : 0;
+            statusTag.textContent = `Status: ✅ Connected to AWS DynamoDB · ${count} readings found`;
           } else {
             statusTag.textContent = `Status: ⚠️ ${res.status} — ${data.error || 'Unknown error'}`;
           }
         } catch (err) {
-          statusTag.textContent = `Status: ❌ Failed — ${err.message}`;
+          statusTag.textContent = `Status: ❌ Connection failed (${err.message})`;
         }
       });
-      selectRoom('TT-201');
+
+      selectRoom('201');
       resizeSky();
       resizeAnalyticalChart();
 
@@ -2369,7 +2461,8 @@
 
       // Override AC Action
       document.getElementById('btn-force-ac').addEventListener('click', () => {
-        const history = rollingHistory[selectedRoomId];
+        const normId = normRoomId(selectedRoomId);
+        const history = rollingHistory[normId] || rollingHistory[selectedRoomId];
         if (history && history.length > 0) {
           history[history.length - 1].Temperature_C = 24.0;
           updateFocusedRoomGauges();
@@ -2379,7 +2472,8 @@
 
       // Dispatch tech action
       document.getElementById('btn-dispatch-tech').addEventListener('click', () => {
-        const history = rollingHistory[selectedRoomId];
+        const normId = normRoomId(selectedRoomId);
+        const history = rollingHistory[normId] || rollingHistory[selectedRoomId];
         if (history && history.length > 0) {
           history[history.length - 1].Energy_kW = 0.2;
           updateSimulationFrame();

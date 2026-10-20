@@ -31,6 +31,11 @@ def lambda_handler(event, context):
                 'body': json.dumps({'error': 'Missing required fields: sensor_id and timestamp'})
             }
         
+        # Attach 7-day TTL if not provided (prevents table bloat and AWS free tier overflow)
+        if 'ttl' not in body:
+            import time
+            body['ttl'] = int(time.time()) + (7 * 24 * 3600)
+
         # Write to DynamoDB
         table.put_item(Item=body)
         

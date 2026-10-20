@@ -25,6 +25,15 @@ def lambda_handler(event, context):
         response = table.query(
             KeyConditionExpression=Key('sensor_id').eq(sensor_id)
         )
+        items = response.get('Items', [])
+
+        # Graceful fallback: If no items found and sensor_id lacks a type suffix, check _Temperature
+        if not items and '_' not in sensor_id:
+            cleaned_id = sensor_id.replace('TT-', '').replace('OCC-', '')
+            fb_response = table.query(
+                KeyConditionExpression=Key('sensor_id').eq(f"{cleaned_id}_Temperature")
+            )
+            items = fb_response.get('Items', [])
         
         import decimal
         def decimal_default(obj):
@@ -38,7 +47,7 @@ def lambda_handler(event, context):
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*' # Required for Person 4's Dashboard
             },
-            'body': json.dumps(response.get('Items', []), default=decimal_default)
+            'body': json.dumps(items, default=decimal_default)
         }
     except Exception as e:
         print(f"Error: {str(e)}")

@@ -13,6 +13,11 @@ Globals:
     Environment:
       Variables:
         TABLE_NAME: !Ref SensorReadingsTable
+  Api:
+    Cors:
+      AllowMethods: "'GET,POST,OPTIONS'"
+      AllowHeaders: "'content-type'"
+      AllowOrigin: "'*'"
 
 Resources:
   SensorReadingsTable:
@@ -29,6 +34,9 @@ Resources:
           KeyType: HASH
         - AttributeName: timestamp
           KeyType: RANGE
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
 
   IngestReadingFunction:
     Type: AWS::Serverless::Function
