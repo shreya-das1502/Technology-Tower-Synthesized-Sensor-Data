@@ -13,6 +13,9 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
+  <!-- Lucide Icons (1.5px stroke engineering system) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
   <script>
     tailwind.config = {
       theme: {
@@ -350,11 +353,11 @@
         <div class="flex items-center gap-4 pt-3">
           <a href="#dashboard-workspace" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold text-sm shadow-xl shadow-sky-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
             <span>Explore Spatial Model</span>
-            <span>↓</span>
+            <i data-lucide="arrow-down" class="w-4 h-4 stroke-[1.5]"></i>
           </a>
           <button onclick="openApiInspector()" class="px-5 py-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] text-slate-300 hover:text-white border border-white/10 text-xs font-mono font-semibold transition flex items-center gap-2">
             <span>Inspect GET /readings API</span>
-            <span class="text-sky-400">↗</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 stroke-[1.5] text-sky-400"></i>
           </button>
         </div>
       </div>
@@ -690,8 +693,8 @@
 
         <!-- Floating BMS Telemetry Callouts -->
         <div class="hero-bms-pill absolute -top-3 sm:top-0 left-0 sm:-left-4 px-3.5 py-2.5 rounded-2xl flex items-center gap-3">
-          <div class="w-8 h-8 rounded-xl bg-sky-500/20 flex items-center justify-center text-sky-300 text-sm">
-            ❄️
+          <div class="w-8 h-8 rounded-xl bg-sky-500/20 flex items-center justify-center text-sky-300">
+            <i data-lucide="snowflake" class="w-4 h-4 stroke-[1.5]"></i>
           </div>
           <div>
             <div class="text-xs font-mono font-bold text-white">24.0°C – 26.0°C</div>
@@ -706,8 +709,8 @@
         </button>
 
         <div class="hero-bms-pill absolute -top-3 sm:top-2 right-0 sm:-right-4 px-3.5 py-2.5 rounded-2xl flex items-center gap-3">
-          <div class="w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-300 text-sm">
-            ⚡
+          <div class="w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-300">
+            <i data-lucide="zap" class="w-4 h-4 stroke-[1.5]"></i>
           </div>
           <div>
             <div class="text-xs font-mono font-bold text-white">38.4 kW Active</div>
@@ -716,8 +719,8 @@
         </div>
 
         <div class="hero-bms-pill absolute -bottom-4 sm:-bottom-2 left-0 sm:-left-4 px-3.5 py-2.5 rounded-2xl flex items-center gap-3">
-          <div class="w-8 h-8 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-300 text-sm">
-            👥
+          <div class="w-8 h-8 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-300">
+            <i data-lucide="users" class="w-4 h-4 stroke-[1.5]"></i>
           </div>
           <div>
             <div class="text-xs font-mono font-bold text-white">412 / 1,420</div>
@@ -793,7 +796,9 @@
       <!-- Live Simulation Clock & Dynamic Weather Glance -->
       <div class="flex items-center gap-4 bg-slate-950/60 px-4 py-2.5 rounded-2xl border border-white/10">
         <div class="flex items-center gap-2.5">
-          <span id="weather-icon-container" class="text-2xl transition-transform duration-500">☀️</span>
+          <span id="weather-icon-container" class="w-6 h-6 flex items-center justify-center text-amber-400 transition-transform duration-500">
+            <i data-lucide="sun" class="w-6 h-6 stroke-[1.5]"></i>
+          </span>
           <div>
             <div class="flex items-center gap-1.5 text-xs font-mono font-bold text-white">
               <span id="weather-outdoor-temp">32.4°C</span>
@@ -878,8 +883,8 @@
       
       <!-- Key Timings Quick Jump -->
       <div class="flex items-center gap-2 overflow-x-auto w-full xl:w-auto pb-1 xl:pb-0">
-        <div class="flex items-center gap-2 text-xs text-slate-300 font-mono shrink-0 mr-1">
-          <span class="text-sky-400">▶</span>
+        <div class="flex items-center gap-1.5 text-xs text-slate-300 font-mono shrink-0 mr-1">
+          <i data-lucide="play" class="w-3.5 h-3.5 stroke-[1.5] text-sky-400 fill-current"></i>
           <span class="font-semibold uppercase tracking-wider">Key Timings:</span>
         </div>
         <button class="key-timing-pill px-3 py-1.5 rounded-xl text-xs font-mono text-slate-200 active shrink-0" data-step="0">
@@ -907,7 +912,7 @@
         <input id="timeline-slider" type="range" min="0" max="216" value="0" class="w-32 sm:w-44 cursor-pointer" />
 
         <button id="btn-play" class="px-3.5 py-1.5 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 text-xs font-mono font-semibold text-sky-200 transition flex items-center gap-1.5 border border-sky-400/30">
-          <span id="icon-play-symbol">⏸</span>
+          <span id="icon-play-symbol" class="inline-flex items-center"><i data-lucide="pause" class="w-3.5 h-3.5 stroke-[1.5] fill-current"></i></span>
           <span id="btn-play-label">Pause</span>
         </button>
 
@@ -975,7 +980,10 @@
           <div class="px-3 py-1.5 rounded-lg bg-black/40 border border-sky-500/20 text-xs flex items-center gap-2">
             <span class="text-slate-300 font-mono text-[11px]">Real-time telemetry analysis active...</span>
           </div>
-          <span class="text-xs font-mono text-sky-400 hover:text-white transition ml-2">Inspect →</span>
+          <span class="text-xs font-mono text-sky-400 hover:text-white transition ml-2 flex items-center gap-1">
+            <span>Inspect</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 stroke-[1.5]"></i>
+          </span>
         </div>
       </div>
 
@@ -1084,7 +1092,7 @@
           <span class="text-xs text-slate-400 font-mono">Step 1 of 3 · Room selected: <strong id="stage-continue-room-label" class="text-white">TT-201</strong></span>
           <button onclick="setWorkflowStage(2)" class="px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold tracking-wide transition shadow-lg shadow-sky-500/20 flex items-center gap-2">
             <span>Proceed to Room Telemetry (Stage 02)</span>
-            <span>→</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 stroke-[1.5]"></i>
           </button>
         </div>
 
@@ -1112,11 +1120,13 @@
           </div>
 
           <div class="flex items-center gap-2">
-            <button onclick="setWorkflowStage(1)" class="px-3.5 py-1.5 rounded-xl text-xs font-mono text-slate-300 hover:text-white border border-white/10 bg-white/[0.03]">
-              ← Pick Different Room
+            <button onclick="setWorkflowStage(1)" class="px-3.5 py-1.5 rounded-xl text-xs font-mono text-slate-300 hover:text-white border border-white/10 bg-white/[0.03] flex items-center gap-1.5">
+              <i data-lucide="arrow-left" class="w-3.5 h-3.5 stroke-[1.5]"></i>
+              <span>Pick Different Room</span>
             </button>
-            <button onclick="setWorkflowStage(3)" class="px-4 py-1.5 rounded-xl text-xs font-mono font-bold text-white bg-sky-500 hover:bg-sky-400 shadow-md shadow-sky-500/20">
-              Run Anomaly Diagnosis (Stage 03) →
+            <button onclick="setWorkflowStage(3)" class="px-4 py-1.5 rounded-xl text-xs font-mono font-bold text-white bg-sky-500 hover:bg-sky-400 shadow-md shadow-sky-500/20 flex items-center gap-1.5">
+              <span>Run Anomaly Diagnosis (Stage 03)</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 stroke-[1.5]"></i>
             </button>
           </div>
         </div>
@@ -1127,7 +1137,10 @@
           <!-- Gauge 1: Occupancy -->
           <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between">
             <div class="flex items-center justify-between text-slate-300 text-xs font-medium">
-              <span>Occupancy</span>
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="users" class="w-3.5 h-3.5 stroke-[1.5] text-sky-400"></i>
+                <span>Occupancy</span>
+              </span>
               <span class="font-mono text-sky-400 text-[11px]">Sensor OCC-201</span>
             </div>
             <div class="my-3 flex items-baseline justify-between">
@@ -1148,7 +1161,10 @@
           <!-- Gauge 2: Temperature -->
           <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between">
             <div class="flex items-center justify-between text-slate-300 text-xs font-medium">
-              <span>Temperature</span>
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="thermometer" class="w-3.5 h-3.5 stroke-[1.5] text-emerald-400"></i>
+                <span>Temperature</span>
+              </span>
               <span class="font-mono text-emerald-400 text-[11px]">Sensor TMP-201</span>
             </div>
             <div class="my-3 flex items-baseline justify-between">
@@ -1167,7 +1183,10 @@
           <!-- Gauge 3: Air Quality (CO2) -->
           <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between">
             <div class="flex items-center justify-between text-slate-300 text-xs font-medium">
-              <span>Air Quality (CO₂)</span>
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="wind" class="w-3.5 h-3.5 stroke-[1.5] text-teal-400"></i>
+                <span>Air Quality (CO₂)</span>
+              </span>
               <span class="font-mono text-teal-400 text-[11px]">Sensor CO2-201</span>
             </div>
             <div class="my-3 flex items-baseline justify-between">
@@ -1186,7 +1205,10 @@
           <!-- Gauge 4: Instant Power -->
           <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between">
             <div class="flex items-center justify-between text-slate-300 text-xs font-medium">
-              <span>Instant Power</span>
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="zap" class="w-3.5 h-3.5 stroke-[1.5] text-amber-400"></i>
+                <span>Instant Power</span>
+              </span>
               <span class="font-mono text-amber-400 text-[11px]">Sensor PWR-201</span>
             </div>
             <div class="my-3 flex items-baseline justify-between">
@@ -1205,7 +1227,10 @@
           <!-- Gauge 5: Relative Humidity -->
           <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between">
             <div class="flex items-center justify-between text-slate-300 text-xs font-medium">
-              <span>Relative Humidity</span>
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="droplets" class="w-3.5 h-3.5 stroke-[1.5] text-sky-400"></i>
+                <span>Relative Humidity</span>
+              </span>
               <span class="font-mono text-sky-400 text-[11px]">Sensor HUM-201</span>
             </div>
             <div class="my-3 flex items-baseline justify-between">
@@ -1224,7 +1249,10 @@
           <!-- Gauge 6: Light Level -->
           <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between">
             <div class="flex items-center justify-between text-slate-300 text-xs font-medium">
-              <span>Illuminance</span>
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="sun-medium" class="w-3.5 h-3.5 stroke-[1.5] text-indigo-400"></i>
+                <span>Illuminance</span>
+              </span>
               <span class="font-mono text-indigo-400 text-[11px]">Sensor LUX-201</span>
             </div>
             <div class="my-3 flex items-baseline justify-between">
@@ -1300,7 +1328,7 @@
         <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
           <div class="flex items-start gap-3.5">
             <div id="diag-status-icon" class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0 text-xl font-bold">
-              ✓
+              <i data-lucide="check" class="w-6 h-6 stroke-[1.5]"></i>
             </div>
             <div>
               <div class="flex items-center gap-2.5">
@@ -1352,7 +1380,9 @@
           <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">GET</span>
           <h3 class="font-mono text-sm font-bold text-white">/readings?sensor_id=<span id="api-modal-sensor-id">OCC-201</span></h3>
         </div>
-        <button onclick="closeApiInspector()" class="text-slate-400 hover:text-white font-mono text-lg px-2">✕</button>
+        <button onclick="closeApiInspector()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition" aria-label="Close API inspector">
+          <i data-lucide="x" class="w-5 h-5 stroke-[1.5]"></i>
+        </button>
       </div>
 
       <div class="text-xs text-slate-300">
@@ -1372,6 +1402,17 @@
   <!-- DIGITAL TWIN SIMULATION JAVASCRIPT ENGINE                                 -->
   <!-- ========================================================================= -->
   <script>
+    // Global Lucide Icon Initializer & Refresh Engine (1.5px stroke width standard)
+    function refreshIcons() {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons({
+          attrs: {
+            'stroke-width': '1.5'
+          }
+        });
+      }
+    }
+
     // 46 Authentic Spaces on Floor 2 matching rooms.csv
     const ROOMS = [
       // Classrooms (6)
@@ -1570,7 +1611,7 @@
 
         datasetLoaded = true;
         if (statusPill) {
-          statusPill.innerHTML = `<span class="text-emerald-400 font-bold">● 69,874 Readings Loaded</span> · Person 3 Simulation Engine`;
+          statusPill.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span><span class="text-emerald-400 font-bold">69,874 Readings Loaded</span> · Person 3 Simulation Engine`;
           statusPill.className = `px-2.5 py-1 rounded-lg text-[11px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/25 flex items-center gap-1.5`;
         }
 
@@ -1580,7 +1621,7 @@
       } catch (err) {
         console.warn("Direct CSV fetch unavailable (e.g. file:// context). Operating via dynamic synthesis engine:", err.message);
         if (statusPill) {
-          statusPill.innerHTML = `<span class="text-sky-400 font-bold">● Dynamic Physics Model</span> · sensor_rules.json`;
+          statusPill.innerHTML = `<span class="w-2 h-2 rounded-full bg-sky-400 inline-block"></span><span class="text-sky-400 font-bold">Dynamic Physics Model</span> · sensor_rules.json`;
         }
       }
     }
@@ -1925,6 +1966,7 @@
       if (stageNum === 3) {
         setTimeout(resizeAnalyticalChart, 50);
       }
+      refreshIcons();
     }
 
     function toggleFullDeckView() {
@@ -1942,6 +1984,7 @@
         btn.classList.remove('border-sky-400', 'text-sky-300');
         setWorkflowStage(1);
       }
+      refreshIcons();
     }
 
     let currentAlerts = [];
@@ -2116,8 +2159,9 @@
       document.getElementById('timeline-slider').value = currentStep;
       document.getElementById('badge-session').textContent = session.name;
 
-      const weatherIcons = { sunny: '☀️', moderate: '🌤️', humid: '🌫️', rainy: '🌧️' };
-      document.getElementById('weather-icon-container').textContent = weatherIcons[dayWeather.cond] || '☀️';
+      const weatherIcons = { sunny: 'sun', moderate: 'cloud-sun', humid: 'cloud-fog', rainy: 'cloud-rain' };
+      const weatherIcon = weatherIcons[dayWeather.cond] || 'sun';
+      document.getElementById('weather-icon-container').innerHTML = `<i data-lucide="${weatherIcon}" class="w-6 h-6 stroke-[1.5]"></i>`;
       document.getElementById('weather-condition-label').textContent = dayWeather.cond;
 
       currentAlerts = [];
@@ -2168,6 +2212,7 @@
       renderActionableAlertBanner(currentAlerts);
       updateFocusedRoomGauges();
       updateAnalyticalChart();
+      refreshIcons();
     }
 
     function renderActionableAlertBanner(alerts) {
@@ -2180,9 +2225,11 @@
         header.className = `text-xs font-bold text-emerald-300 font-mono`;
         card.className = `glass-card p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-emerald-500/30 bg-emerald-500/[0.06] cursor-pointer`;
         snippetsContainer.innerHTML = `
-          <div class="px-3 py-1.5 rounded-lg bg-black/40 border border-emerald-500/20 text-xs text-emerald-300">
-            ✓ All 46 monitored spaces operating within compliance thresholds
+          <div class="px-3 py-1.5 rounded-lg bg-black/40 border border-emerald-500/20 text-xs text-emerald-300 flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5 stroke-[1.5] text-emerald-400 shrink-0"></i>
+            <span>All 46 monitored spaces operating within compliance thresholds</span>
           </div>`;
+        refreshIcons();
         return;
       }
 
@@ -2195,7 +2242,8 @@
           <span class="font-mono font-bold ${a.level === 'CRITICAL' ? 'text-rose-200' : 'text-amber-200'}">TT-${normRoomId(a.roomId)}</span>
           <span class="text-slate-300 truncate max-w-[140px] font-sans">${a.brief || a.text}</span>
         </div>
-      `).join('') + `<span class="text-xs font-mono text-sky-400 hover:text-white transition ml-2">Inspect →</span>`;
+      `).join('') + `<span class="text-xs font-mono text-sky-400 hover:text-white transition ml-2 inline-flex items-center gap-1"><span>Inspect</span><i data-lucide="arrow-right" class="w-3 h-3 stroke-[1.5]"></i></span>`;
+      refreshIcons();
     }
 
     function colorFloorRoom(room, data) {
@@ -2357,34 +2405,35 @@
       const diagBadge = document.getElementById('diag-deviation-badge');
 
       if (latest.Occupancy > room.capacity) {
-        diagIcon.textContent = '⚠️';
+        diagIcon.innerHTML = '<i data-lucide="alert-triangle" class="w-6 h-6 stroke-[1.5]"></i>';
         diagIcon.className = 'w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-400/30 flex items-center justify-center text-rose-400 shrink-0 text-xl font-bold';
         diagTitle.textContent = 'Capacity Threshold Violation';
         diagBadge.textContent = `+${latest.Occupancy - room.capacity} students`;
         diagBadge.className = 'text-xs font-mono px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300';
         diagDesc.textContent = `Room headcount (${latest.Occupancy}) exceeds designated safety capacity of ${room.capacity}. Recommend proctor intervention to balance student load.`;
       } else if (latest.Occupancy === 0 && latest.Energy_kW > 2.0) {
-        diagIcon.textContent = '⚡';
+        diagIcon.innerHTML = '<i data-lucide="zap" class="w-6 h-6 stroke-[1.5]"></i>';
         diagIcon.className = 'w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400 shrink-0 text-xl font-bold';
         diagTitle.textContent = 'Ghost Load / Vampire Power Draw';
         diagBadge.textContent = `${latest.Energy_kW} kW idle draw`;
         diagBadge.className = 'text-xs font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300';
         diagDesc.textContent = `Equipment or projectors left powered without occupancy. Initiating remote eco-standby will save ~${(latest.Energy_kW - 0.2).toFixed(2)} kW.`;
       } else if (latest.Temperature_C > 27.0) {
-        diagIcon.textContent = '🔥';
+        diagIcon.innerHTML = '<i data-lucide="flame" class="w-6 h-6 stroke-[1.5]"></i>';
         diagIcon.className = 'w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-400/30 flex items-center justify-center text-rose-400 shrink-0 text-xl font-bold';
         diagTitle.textContent = 'HVAC Compressor Deficit';
-        diagBadge.textContent = `Δ +2.8°C drift`;
+        diagBadge.textContent = `Delta +2.8°C drift`;
         diagBadge.className = 'text-xs font-mono px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300';
         diagDesc.textContent = `Room temperature is drifting towards outdoor ambient. Recommend overriding compressor setpoint to 24°C.`;
       } else {
-        diagIcon.textContent = '✓';
+        diagIcon.innerHTML = '<i data-lucide="check" class="w-6 h-6 stroke-[1.5]"></i>';
         diagIcon.className = 'w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0 text-xl font-bold';
         diagTitle.textContent = 'Nominal Operations';
         diagBadge.textContent = `0.0% variance`;
         diagBadge.className = 'text-xs font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300';
         diagDesc.textContent = `Sensor feeds conform strictly to ${room.type} baseline specifications. HVAC compressor modulating efficiently within the 24–26°C comfort envelope.`;
       }
+      refreshIcons();
     }
 
     // Sparkline Canvas Renderer
@@ -2589,13 +2638,14 @@
           const data = await res.json();
           if (res.ok) {
             const count = Array.isArray(data) ? data.length : 0;
-            statusTag.textContent = `Status: ✅ Connected to AWS DynamoDB · ${count} readings found`;
+            statusTag.innerHTML = `Status: <span class="inline-flex items-center gap-1 text-emerald-400"><i data-lucide="check-circle" class="w-3.5 h-3.5 stroke-[1.5]"></i> Connected to AWS DynamoDB</span> · ${count} readings found`;
           } else {
-            statusTag.textContent = `Status: ⚠️ ${res.status} — ${data.error || 'Unknown error'}`;
+            statusTag.innerHTML = `Status: <span class="inline-flex items-center gap-1 text-amber-400"><i data-lucide="alert-triangle" class="w-3.5 h-3.5 stroke-[1.5]"></i> Error ${res.status}</span> — ${data.error || 'Unknown error'}`;
           }
         } catch (err) {
-          statusTag.textContent = `Status: ❌ Connection failed (${err.message})`;
+          statusTag.innerHTML = `Status: <span class="inline-flex items-center gap-1 text-rose-400"><i data-lucide="alert-circle" class="w-3.5 h-3.5 stroke-[1.5]"></i> Connection failed</span> (${err.message})`;
         }
+        refreshIcons();
       });
 
       selectRoom('201');
@@ -2616,7 +2666,10 @@
       playBtn.addEventListener('click', () => {
         isPlaying = !isPlaying;
         playLabel.textContent = isPlaying ? "Pause" : "Play";
-        playIcon.textContent = isPlaying ? "⏸" : "▶";
+        playIcon.innerHTML = isPlaying
+          ? '<i data-lucide="pause" class="w-3.5 h-3.5 stroke-[1.5] fill-current"></i>'
+          : '<i data-lucide="play" class="w-3.5 h-3.5 stroke-[1.5] fill-current"></i>';
+        refreshIcons();
       });
 
       // Speed selectors
@@ -2756,6 +2809,7 @@
       }
 
       updateSimulationFrame();
+      refreshIcons();
       requestAnimationFrame(loop);
     }
 
